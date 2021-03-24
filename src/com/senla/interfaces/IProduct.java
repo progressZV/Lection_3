@@ -1,7 +1,7 @@
 package com.senla.interfaces;
 
 public interface IProduct {
-    void installFirstPart(IproductPart productType);
-    void installSecondPart(IproductPart productType);
-    void installThirdPart(IproductPart productType);
+    void installFirstPart(IProductPart productType);
+    void installSecondPart(IProductPart productType);
+    void installThirdPart(IProductPart productType);
 }
