@@ -18,10 +18,12 @@ public class UserInputService {
             case 3:
                 return roomService.changeFixStatus(Hotel.getHotel());
             case 4:
-                return roomService.changeCost(Hotel.getHotel());
+                return roomService.changeCost(Hotel.getHotel(), Hotel.getServices());
             case 5:
-                return roomService.createNewRoom(Hotel.getHotel());
+                return roomService.createNewRoomOrService(Hotel.getHotel(), Hotel.getServices());
             case 6:
+                return roomService.listNumbers(Hotel.getHotel());
+            case 7:
                 return null;
             default:
                 return "Некорректный ввод.";

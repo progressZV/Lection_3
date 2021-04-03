@@ -1,17 +1,53 @@
 package com.senla.service;
 
-import com.senla.entity.Room;
+import com.senla.entity.*;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class RoomService {
-    public String createNewRoom(List<Room> hotel){
-        Room room = new Room();
-        room.setFreeStatus(true);
-        hotel.add(room);
-        room.setNumber(hotel.size());
-        return "New room added.";
+    public String createNewRoomOrService(List<Room> hotel, List<Service> services){
+        System.out.println("1 - Добавить номер.\n 2 - Добавить услугу.");
+        Scanner in = new Scanner(System.in);
+        int answer = in.nextInt();
+        in.nextLine();
+        if(answer == 1) {
+            Room room = new Room();
+            room.setFreeStatus(true);
+            hotel.add(room);
+
+            System.out.println("Укажите номер комнаты.");
+            answer = in.nextInt();
+            room.setNumber(answer);
+            in.nextLine();
+
+            System.out.println("Укажите кол-во комнат номера:");
+            answer = in.nextInt();
+            room.setRooms_count(answer);
+            in.nextLine();
+
+            System.out.println("Укажите кол-во звёзд номера:");
+            answer = in.nextInt();
+            room.setStars_count(answer);
+            in.nextLine();
+
+            System.out.println("Укажите цену за данный номер.");
+            double cost = in.nextDouble();
+            room.setCost(cost);
+            in.nextLine();
+            return "New room added.";
+        }
+        else
+        {
+            Service service = new Service();
+            System.out.println("Какую услугу добавить?");
+            String sv = in.nextLine();
+            service.setName(sv);
+            services.add(service);
+            System.out.println("Укажите цену за данную услугу.");
+            double cost = in.nextDouble();
+            service.setCost(cost);
+            return "Услуга была добавлена. Цена этой услуги:" + service.getCost();
+        }
     }
     public String putInTheRoom(List<Room> hotel){
         System.out.println("В какой номер поселить?");
@@ -71,21 +107,65 @@ public class RoomService {
         }
         return "Данного номера не существует.";
     }
-    public String changeCost(List<Room> hotel){
-        System.out.println("Цену какого номера изменить?");
+    public String changeCost(List<Room> hotel, List<Service> services){
+        System.out.println("1 - Изменить цену номера.\n 2 - Изменить цену услуги.");
         Scanner in = new Scanner(System.in);
         int answer = in.nextInt();
-        for(Room room : hotel){
-            if(room.getNumber() == answer && room.getFreeStatus() == false){
-                return "Данный номер занят.";
+        if(answer == 1) {
+            System.out.println("Цену какого номера изменить?");
+            answer = in.nextInt();
+            for (Room room : hotel) {
+                if (room.getNumber() == answer && room.getFreeStatus() == false) {
+                    return "Данный номер занят.";
+                } else if (room.getNumber() == answer && room.getFreeStatus() == true) {
+                    System.out.println("Назовите цену:");
+                    double cost = in.nextDouble();
+                    if(cost == room.getCost())
+                        return "Данная цена не отличается от имеющейся.";
+                    room.setCost(cost);
+                    return "Цена номера изменена на " + cost;
+                }
             }
-            else if (room.getNumber() == answer && room.getFreeStatus() == true){
-                System.out.println("Назовите цену:");
-                answer = in.nextInt();
-                room.setCost(answer);
-                return "Цена номера изменена на " + answer;
+            return "Данного номера не существует.";
+        }
+        else
+        {
+            System.out.println("Цену какой услуги изменить?");
+            String name = in.nextLine();
+            for(Service service : services){
+                if (service.getName() == name){
+                    System.out.println("Назовите цену:");
+                    answer = in.nextInt();
+                    if(answer == service.getCost())
+                        return "Данная цена не отличается от имеющейся.";
+                    service.setCost(answer);
+                    return "Цена услуги изменена на " + answer;
+                }
+            }
+            return "Данной услуги у нас нет.";
+        }
+    }
+    public String listNumbers(List<Room> hotel){
+        StringBuilder stringBuilder = new StringBuilder();
+        Comparator<Room> roomComparator = new RoomCostComparator().thenComparing(new RoomRoomsComparator()).thenComparing(new RoomStarsComparator());
+        Collections.sort(hotel, roomComparator);
+
+        System.out.println("1 - Список всех номеров.\n 2 - Список свободных номеров.");
+        Scanner in = new Scanner(System.in);
+        int answer = in.nextInt();
+        if (answer == 1) {
+            for (Room room : hotel) {
+                stringBuilder.append(room.toString());
+            }
+            return stringBuilder.toString();
+        }
+        else {
+            for (Room room : hotel) {
+                if (room.getFreeStatus() == true){
+                    stringBuilder.append(room.toString());
+                }
             }
         }
-        return "Данного номера не существует.";
+        return  stringBuilder.toString();
     }
 }
