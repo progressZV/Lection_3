@@ -5,12 +5,12 @@ import com.senla.entity.*;
 import java.util.*;
 
 public class RoomService {
-    public String createNewRoomOrService(List<Room> hotel, List<Service> services){
+    public String createNewRoomOrService(List<Room> hotel, List<Service> services) {
         System.out.println("1 - Добавить номер.\n 2 - Добавить услугу.");
         Scanner in = new Scanner(System.in);
         int answer = in.nextInt();
         in.nextLine();
-        if(answer == 1) {
+        if (answer == 1) {
             Room room = new Room();
             room.setFreeStatus(true);
             hotel.add(room);
@@ -35,9 +35,7 @@ public class RoomService {
             room.setCost(cost);
             in.nextLine();
             return "New room added.";
-        }
-        else
-        {
+        } else {
             Service service = new Service();
             System.out.println("Какую услугу добавить?");
             String sv = in.nextLine();
@@ -49,69 +47,71 @@ public class RoomService {
             return "Услуга была добавлена. Цена этой услуги:" + service.getCost();
         }
     }
-    public String putInTheRoom(List<Room> hotel){
+
+    public String putInTheRoom(List<Room> hotel) {
         System.out.println("В какой номер поселить?");
         Scanner in = new Scanner(System.in);
         int answer = in.nextInt();
-        for(Room room : hotel){
-            if(room.getNumber() == answer && room.getFreeStatus() == true && room.getFixStatus() == false){
+        for (Room room : hotel) {
+            if (room.getNumber() == answer && room.getFreeStatus() == true && room.getFixStatus() == false) {
                 room.setFreeStatus(false);
                 return "Поселение прошло успешно.";
-            }
-            else if (room.getNumber() == answer && room.getFreeStatus() == false){
+            } else if (room.getNumber() == answer && room.getFreeStatus() == false) {
                 return "Данный номер занят.";
             }
         }
         return "Данного номера не существует.";
     }
-    public String removeFromRoom(List<Room> hotel){
+
+    public String removeFromRoom(List<Room> hotel) {
         System.out.println("Из какого номера выселить?");
         Scanner in = new Scanner(System.in);
         int answer = in.nextInt();
-        for(Room room : hotel){
-            if(room.getNumber() == answer && room.getFreeStatus() == false){
+        for (Room room : hotel) {
+            if (room.getNumber() == answer && room.getFreeStatus() == false) {
                 room.setFreeStatus(true);
                 return "Выселение прошло успешно.";
-            }
-            else if (room.getNumber() == answer && room.getFreeStatus() == true){
+            } else if (room.getNumber() == answer && room.getFreeStatus() == true) {
                 return "Данный номер никем не занят.";
             }
         }
         return "Данного номера не существует.";
     }
-    public String changeFixStatus(List<Room> hotel){
+
+    public String changeFixStatus(List<Room> hotel) {
         System.out.println("Статус какого номера изменить?");
         Scanner in = new Scanner(System.in);
         int answer = in.nextInt();
-        for(Room room : hotel){
-            if(room.getNumber() == answer && room.getFreeStatus() == false){
+        for (Room room : hotel) {
+            if (room.getNumber() == answer && room.getFreeStatus() == false) {
                 return "Данный номер занят.";
-            }
-            else if (room.getNumber() == answer && room.getFreeStatus() == true){
+            } else if (room.getNumber() == answer && room.getFreeStatus() == true) {
                 System.out.println("На какой статус изменить?\n 1 - Ремонтируемый. \t 2 - Обслуживаемый.");
                 answer = in.nextInt();
-                switch (answer){
+                switch (answer) {
                     case 1:
-                        if(room.getFixStatus() == false)
+                        if (room.getFixStatus() == false)
                             room.setFixStatus(true);
                         else return "Данная комната уже ремонтируется.";
                         return "Статус номера изменён на ремонтируемый.";
                     case 2:
-                        if(room.getFixStatus() == true)
+                        if (room.getFixStatus() == true)
                             room.setFixStatus(false);
                         else return "Данная комната уже обслуживается.";
                         return "Статус номера изменён на обслуживаемый.";
-                    default: return "Некорректный ввод.";
+                    default:
+                        return "Некорректный ввод.";
                 }
             }
         }
         return "Данного номера не существует.";
     }
-    public String changeCost(List<Room> hotel, List<Service> services){
+
+    public String changeCost(List<Room> hotel, List<Service> services) {
         System.out.println("1 - Изменить цену номера.\n 2 - Изменить цену услуги.");
         Scanner in = new Scanner(System.in);
         int answer = in.nextInt();
-        if(answer == 1) {
+        if (answer == 1) {
             System.out.println("Цену какого номера изменить?");
             answer = in.nextInt();
             for (Room room : hotel) {
@@ -120,23 +120,21 @@ public class RoomService {
                 } else if (room.getNumber() == answer && room.getFreeStatus() == true) {
                     System.out.println("Назовите цену:");
                     double cost = in.nextDouble();
-                    if(cost == room.getCost())
+                    if (cost == room.getCost())
                         return "Данная цена не отличается от имеющейся.";
                     room.setCost(cost);
                     return "Цена номера изменена на " + cost;
                 }
             }
             return "Данного номера не существует.";
-        }
-        else
-        {
+        } else {
             System.out.println("Цену какой услуги изменить?");
             String name = in.nextLine();
-            for(Service service : services){
-                if (service.getName() == name){
+            for (Service service : services) {
+                if (service.getName() == name) {
                     System.out.println("Назовите цену:");
                     answer = in.nextInt();
-                    if(answer == service.getCost())
+                    if (answer == service.getCost())
                         return "Данная цена не отличается от имеющейся.";
                     service.setCost(answer);
                     return "Цена услуги изменена на " + answer;
@@ -145,7 +143,8 @@ public class RoomService {
             return "Данной услуги у нас нет.";
         }
     }
-    public String listNumbers(List<Room> hotel){
+
+    public String listNumbers(List<Room> hotel) {
         StringBuilder stringBuilder = new StringBuilder();
         Comparator<Room> roomComparator = new RoomCostComparator().thenComparing(new RoomRoomsComparator()).thenComparing(new RoomStarsComparator());
         Collections.sort(hotel, roomComparator);
@@ -158,14 +157,30 @@ public class RoomService {
                 stringBuilder.append(room.toString());
             }
             return stringBuilder.toString();
-        }
-        else {
+        } else {
             for (Room room : hotel) {
-                if (room.getFreeStatus() == true){
+                if (room.getFreeStatus() == true) {
                     stringBuilder.append(room.toString());
                 }
             }
         }
-        return  stringBuilder.toString();
+        return stringBuilder.toString();
+    }
+
+    public String countOfFreeRoomsOrVisitors(List<Room> hotel) {
+        System.out.println("1 - Общее число свободных номеров.\n 2 - Общее число посетителей.");
+        int counterOfVisitors = 0;
+        int counterOfFreeRooms = 0;
+        for (Room room : hotel) {
+            if (room.getFreeStatus())
+                counterOfFreeRooms++;
+            else
+                counterOfVisitors++;
+        }
+        Scanner in = new Scanner(System.in);
+        int answer = in.nextInt();
+        if (answer == 1) {
+            return "Общее число свободных номеров:" + counterOfFreeRooms;
+        } else return "Общее число посетителей:" + counterOfVisitors;
     }
 }
