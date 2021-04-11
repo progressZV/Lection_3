@@ -2,11 +2,11 @@ package com.senla.service;
 
 import com.senla.entity.Hotel;
 
-public class UserInputService {
+public class UserService {
 
     private final RoomService roomService;
 
-    public UserInputService(RoomService roomService){
+    public UserService(RoomService roomService){
         this.roomService = roomService;
     }
     public String menu(int c1){

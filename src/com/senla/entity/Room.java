@@ -11,6 +11,11 @@ public class Room {
     private int stars_count;
     private int rooms_count;
 
+   public Room(int number, double cost){
+        this.number = number;
+        this.cost = cost;
+    }
+
     public double getCost() { return cost; }
 
     public void setCost(double cost){

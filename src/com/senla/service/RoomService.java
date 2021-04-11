@@ -1,54 +1,29 @@
 package com.senla.service;
 
+import com.senla.dao.*;
 import com.senla.entity.*;
 
 import java.util.*;
 
 public class RoomService {
-    public String createNewRoomOrService(List<Room> hotel, List<Service> services){
-        System.out.println("1 - Добавить номер.\n 2 - Добавить услугу.");
-        Scanner in = new Scanner(System.in);
-        int answer = in.nextInt();
-        in.nextLine();
-        if(answer == 1) {
-            Room room = new Room();
-            room.setFreeStatus(true);
-            hotel.add(room);
 
-            System.out.println("Укажите номер комнаты.");
-            answer = in.nextInt();
-            room.setNumber(answer);
-            in.nextLine();
+    private IRoomDao roomDao = new FileRoomDao();
 
-            System.out.println("Укажите кол-во комнат номера:");
-            answer = in.nextInt();
-            room.setRooms_count(answer);
-            in.nextLine();
 
-            System.out.println("Укажите кол-во звёзд номера:");
-            answer = in.nextInt();
-            room.setStars_count(answer);
-            in.nextLine();
-
-            System.out.println("Укажите цену за данный номер.");
-            double cost = in.nextDouble();
-            room.setCost(cost);
-            in.nextLine();
-            return "New room added.";
-        }
-        else
-        {
-            Service service = new Service();
-            System.out.println("Какую услугу добавить?");
-            String sv = in.nextLine();
-            service.setName(sv);
-            services.add(service);
-            System.out.println("Укажите цену за данную услугу.");
-            double cost = in.nextDouble();
-            service.setCost(cost);
-            return "Услуга была добавлена. Цена этой услуги:" + service.getCost();
-        }
+    public void addRoom(Room room){
+        roomDao.saveRoom(room);
     }
+    public void deleteRoom(int id){
+        roomDao.deleteRoom(id);
+    }
+    public void addService(Service service){
+        roomDao.saveService(service);
+    }
+    public List<Room> getAllRooms(){
+        return roomDao.getList();
+    }
+
+
     public String putInTheRoom(List<Room> hotel){
         System.out.println("В какой номер поселить?");
         Scanner in = new Scanner(System.in);

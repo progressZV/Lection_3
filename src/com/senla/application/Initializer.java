@@ -1,18 +1,15 @@
 package com.senla.application;
 
-import com.senla.service.*;
+import com.senla.entity.*;
+import com.senla.service.AdministratorService;
 
 public class Initializer {
     public void initialize() {
-        RoomService roomService = new RoomService();
-        Menu menu = new Menu();
-        UserInputService userInputService = new UserInputService(roomService);
-        while (true) {
-            var str = userInputService.menu(menu.menu());
-            if (str == null) {
-                break;
-            }
-            System.out.println(str);
-        }
+        AdministratorService administratorService = new AdministratorService();
+
+        Room room = new Room(); // параметры
+        administratorService.addRoom(room);
+        Service service = new Service(); // параметры
+        administratorService.addService(service);
     }
 }
