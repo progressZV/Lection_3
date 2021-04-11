@@ -24,6 +24,8 @@ public class UserService {
             case 6:
                 return roomService.listNumbers(Hotel.getHotel());
             case 7:
+                return roomService.countOfFreeRoomsOrVisitors(Hotel.getHotel());
+            case 8:
                 return null;
             default:
                 return "Некорректный ввод.";
