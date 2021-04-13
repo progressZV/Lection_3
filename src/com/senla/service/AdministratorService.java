@@ -11,11 +11,11 @@ public class AdministratorService {
 
 
 
-    public void addRoom(Room room){
+    public void addRoom(Room room) {
         roomService.addRoom(room);
     }
 
-    public void addService(Service _service){
+    public void addService(Service _service) {
         service.addService(_service);
     }
 }

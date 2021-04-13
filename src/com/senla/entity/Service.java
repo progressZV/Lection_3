@@ -4,6 +4,11 @@ public class Service {
     private String name = null;
     private double cost = 0;
 
+    public Service(String name, double cost){
+        this.name = name;
+        this.cost = cost;
+    }
+
     public String getName() {
         return name;
     }

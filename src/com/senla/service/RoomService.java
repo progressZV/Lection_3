@@ -11,7 +11,7 @@ public class RoomService {
 
 
     public void addRoom(Room room){
-        roomDao.saveRoom(room);
+        roomDao.saveRoom(room) ;
     }
     public void deleteRoom(int id){
         roomDao.deleteRoom(id);
@@ -19,7 +19,7 @@ public class RoomService {
     public void addService(Service service){
         roomDao.saveService(service);
     }
-    public List<Room> getAllRooms(){
+    public List<Room> getAllRooms() {
         return roomDao.getList();
     }
 
