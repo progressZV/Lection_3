@@ -5,9 +5,9 @@ import com.senla.entity.Service;
 
 import java.util.List;
 
-public interface IRoomDao {
+public interface IRoomDao{
     void saveRoom(Room room);
-    void deleteRoom(int id);
+    void deleteRoom(int number);
     List<Room> getList();
     void saveService(Service service);
 }
