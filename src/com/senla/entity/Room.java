@@ -14,6 +14,8 @@ public class Room {
    public Room(int number, double cost){
         this.number = number;
         this.cost = cost;
+        this.freeStatus = true;
+        this.fixStatus = false;
     }
 
     public double getCost() { return cost; }

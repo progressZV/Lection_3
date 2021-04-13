@@ -20,7 +20,7 @@ public class FileStreamWriter {
     public void write(String str){
         boolean flag = checkFile(path);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path,true))) {
-            if (!flag) {
+            if (flag) {
                 bw.write(str);
             }
         }
@@ -30,4 +30,3 @@ public class FileStreamWriter {
             }
         }
     }
-}

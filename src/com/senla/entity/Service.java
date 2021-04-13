@@ -24,4 +24,10 @@ public class Service {
     public void setCost(double cost) {
         this.cost = cost;
     }
+
+    @Override
+    public String toString(){
+        return "Сервис " + getName() + " Цена:" +
+                getCost() + "\n";
+    }
 }

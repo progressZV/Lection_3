@@ -8,23 +8,46 @@ import java.util.*;
 public class RoomService {
 
     private IRoomDao roomDao = new FileRoomDao();
+    private final List<Room> rooms = new ArrayList<>();
 
+    public void addRoom(Room room) {
+        if(rooms.size() == 0) {
+            rooms.add(room);
+            roomDao.saveRoom(room);
+            return;
+        }
+            for (Room room1 : rooms) {
+                if (room.getNumber() != room1.getNumber() && room.getFreeStatus()) {
+                    rooms.add(room);
+                    roomDao.saveRoom(room);
+                    return;
+                }
+            }
+            System.out.println("Номер уже существует" + "\n");
+    }
 
-    public void addRoom(Room room){
-        roomDao.saveRoom(room) ;
-    }
-    public void deleteRoom(int id){
-        roomDao.deleteRoom(id);
-    }
-    public void addService(Service service){
-        roomDao.saveService(service);
-    }
-    public List<Room> getAllRooms() {
-        return roomDao.getList();
+    public void deleteRoom(int number) {
+        if (rooms.size() > 0) {
+            for (Room room : rooms) {
+                if (room.getNumber() == number) {
+                    rooms.remove(room);
+                    roomDao.deleteRoom(number);
+                    return;
+                }
+            }
+        }
+            System.out.println("Комнаты не существует." + "\n");
     }
 
-
-    public String putInTheRoom(List<Room> hotel){
+    public void getAllRooms() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Room room : rooms) {
+            stringBuilder.append(room.toString()).append("\n");
+        }
+        roomDao.getList(stringBuilder.toString() + "\n");
+    }
+}
+ /*   public String putInTheRoom(List<Room> hotel){
         System.out.println("В какой номер поселить?");
         Scanner in = new Scanner(System.in);
         int answer = in.nextInt();
@@ -143,4 +166,4 @@ public class RoomService {
         }
         return  stringBuilder.toString();
     }
-}
+} */
