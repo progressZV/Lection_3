@@ -46,6 +46,25 @@ public class RoomService {
         }
         roomDao.getList(stringBuilder.toString() + "\n");
     }
+
+    public void changeCostRoom(Room room, double cost) {
+        for (Room room1 : rooms) {
+            if (room1.getNumber() == room.getNumber()) {
+                if (!room.getFreeStatus()) {
+                    System.out.println("Комната занята." + "\n");
+                } else {
+                    if (cost == room.getCost()) {
+                        System.out.println("Данная цена не отличается от имеющейся." + "\n");
+                        return;
+                    }
+                    room.setCost(cost);
+                    roomDao.changeCostRoom(room);
+                    return;
+                }
+            } else
+                System.out.println("Комнаты не существует.");
+        }
+    }
 }
  /*   public String putInTheRoom(List<Room> hotel){
         System.out.println("В какой номер поселить?");

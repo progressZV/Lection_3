@@ -24,4 +24,10 @@ public class FileRoomDao implements IRoomDao{
         fileStreamWriter.write("Список комнат:" + "\n");
        fileStreamWriter.write(str);
     }
+
+    @Override
+    public void changeCostRoom(Room room) {
+        fileStreamWriter.write("Изменение цены комнаты:" + "\n");
+        fileStreamWriter.write("Изменена цена номера " + room.getNumber() + " на " + room.getCost() + "\n" + "\n");
+    }
 }

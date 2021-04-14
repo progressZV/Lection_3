@@ -34,4 +34,6 @@ public class AdministratorService {
     public void checkAllServices() { service.getAllServices(); }
 
     public void checkAllClients() { clientService.getClients(); }
+
+    public void changeCostRoom(Room room, double cost) { roomService.changeCostRoom(room, cost); }
 }
