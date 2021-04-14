@@ -9,17 +9,20 @@ public class FileServiceDao implements IServiceDao{
 
     @Override
     public void saveService(Service service) {
+        fileStreamWriter.write("Запись сервиса:" + "\n");
         fileStreamWriter.write(service.toString() + "\n");
     }
 
     @Override
     public void deleteService(String name) {
-        fileStreamWriter.write("Сервис " + name + " удалён." + "\n");
+        fileStreamWriter.write("Удаление сервиса:" + "\n");
+        fileStreamWriter.write("Сервис " + name + " удалён." + "\n" + "\n");
     }
 
     @Override
     public void getService(String str) {
-        fileStreamWriter.write(str + "\n");
+        fileStreamWriter.write("Список сервисов:" + "\n");
+        fileStreamWriter.write(str);
     }
 
 }

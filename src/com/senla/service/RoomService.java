@@ -42,7 +42,7 @@ public class RoomService {
     public void getAllRooms() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Room room : rooms) {
-            stringBuilder.append(room.toString()).append("\n");
+            stringBuilder.append(room.toString());
         }
         roomDao.getList(stringBuilder.toString() + "\n");
     }

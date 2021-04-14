@@ -7,12 +7,12 @@ public class Initializer {
     public void initialize(){
         AdministratorService administratorService = new AdministratorService();
 
-        Room room = new Room(1,20); // параметры
+        Room room = new Room(1,20, 3, 2); // параметры
         administratorService.addRoom(room) ;
         Service service = new Service("Бар", 200); // параметры
         administratorService.addService(service);
 
-        Room room1 = new Room(2,45);
+        Room room1 = new Room(2,45, 4, 3);
         administratorService.addRoom(room1);
         Service service1 = new Service("Массаж", 50);
         administratorService.addService(service1);

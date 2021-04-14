@@ -26,7 +26,7 @@ public class ServiceOfServices {
         if (services.size() > 0) {
             for (Service service : services) {
                 if (service.getName() == name) {
-                    services.remove(service);
+                    services.remove(service + "\n");
                     serviceDao.deleteService(name);
                     return;
                 }
@@ -38,8 +38,8 @@ public class ServiceOfServices {
     public void getAllServices() {
         StringBuilder stringBuilder = new StringBuilder();
         for(Service service : services){
-            stringBuilder.append(service.toString()).append("\n");
+            stringBuilder.append(service.toString());
         }
-        serviceDao.getService(stringBuilder.toString());
+        serviceDao.getService(stringBuilder.toString() + "\n");
     }
 }

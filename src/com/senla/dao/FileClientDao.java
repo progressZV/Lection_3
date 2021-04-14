@@ -11,16 +11,19 @@ public class FileClientDao implements IClientDao{
 
     @Override
     public void saveClient(Room room, Client client) {
-        fileStreamWriter.write("Клиент " + client.getName() + " успешно заселён в номер " + room.getNumber() + "\n");
+        fileStreamWriter.write("Запись клиента:" + "\n");
+        fileStreamWriter.write("Клиент " + client.getName() + " успешно заселён в номер " + room.getNumber() + "\n" + "\n");
     }
 
     @Override
     public void removeClient(String name) {
-        fileStreamWriter.write("Клиент " + name + "выселен из номера" + "\n");
+        fileStreamWriter.write("Удаление клиента:" + "\n");
+        fileStreamWriter.write("Клиент " + name + "выселен из номера" + "\n" + "\n");
     }
 
     @Override
     public final void getClients(String str) {
-        fileStreamWriter.write(str +  "\n");
+        fileStreamWriter.write("Список клиентов:" + "\n");
+        fileStreamWriter.write(str);
     }
 }

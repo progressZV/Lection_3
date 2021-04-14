@@ -37,11 +37,10 @@ public class ClientService {
     }
     public void getClients(){
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Клиенты:").append("\n");
        for(Client client : clients){
-           stringBuilder.append(client.getName()).append("\n");
+           stringBuilder.append(client.getName() + "\n");
        }
-       clientService.getClients(stringBuilder.toString());
+       clientService.getClients(stringBuilder.toString() + "\n");
     }
 }
 

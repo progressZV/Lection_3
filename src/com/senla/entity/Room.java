@@ -11,11 +11,13 @@ public class Room {
     private int stars_count;
     private int rooms_count;
 
-   public Room(int number, double cost){
+   public Room(int number, double cost, int stars_count, int rooms_count){
         this.number = number;
         this.cost = cost;
         this.freeStatus = true;
         this.fixStatus = false;
+        this.stars_count = stars_count;
+        this.rooms_count = rooms_count;
     }
 
     public double getCost() { return cost; }

@@ -9,16 +9,19 @@ public class FileRoomDao implements IRoomDao{
 
     @Override
     public void saveRoom(Room room) {
+        fileStreamWriter.write("Запись комнаты:" + "\n");
         fileStreamWriter.write(room.toString() + "\n");
     }
 
     @Override
     public void deleteRoom(int number) {
-        fileStreamWriter.write("Комната с номером " + number + " удалена." + "\n");
+        fileStreamWriter.write("Удаление комнаты:" + "\n");
+        fileStreamWriter.write("Комната с номером " + number + " удалена." + "\n" + "\n");
     }
 
     @Override
     public void getList(String str){
-       fileStreamWriter.write(str + "\n");
+        fileStreamWriter.write("Список комнат:" + "\n");
+       fileStreamWriter.write(str);
     }
 }
