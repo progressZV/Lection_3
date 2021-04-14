@@ -25,6 +25,7 @@ public class Initializer {
         administratorService.checkAllServices();
         administratorService.checkAllClients();
 
+        administratorService.changeFixStatus(room1);
         administratorService.removeService("Бар");
         administratorService.removeRoom(1);
         administratorService.removeClient("Mark", room1);

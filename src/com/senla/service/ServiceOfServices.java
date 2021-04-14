@@ -26,7 +26,7 @@ public class ServiceOfServices {
         if (services.size() > 0) {
             for (Service service : services) {
                 if (service.getName() == name) {
-                    services.remove(service + "\n");
+                    services.remove(service);
                     serviceDao.deleteService(name);
                     return;
                 }

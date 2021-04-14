@@ -30,4 +30,12 @@ public class FileRoomDao implements IRoomDao{
         fileStreamWriter.write("Изменение цены комнаты:" + "\n");
         fileStreamWriter.write("Изменена цена номера " + room.getNumber() + " на " + room.getCost() + "\n" + "\n");
     }
+
+    @Override
+    public void changeFixStatus(Room room) {
+        fileStreamWriter.write("Изменение статуса номера:" + "\n");
+        if(room.getFixStatus())
+        fileStreamWriter.write("Изменён статус номера на ремонтируемый." + "\n");
+        else fileStreamWriter.write("Изменён статус номера на обслуживаемый." + "\n");
+    }
 }

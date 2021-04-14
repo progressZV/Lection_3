@@ -65,6 +65,12 @@ public class RoomService {
                 System.out.println("Комнаты не существует.");
         }
     }
+
+    public void changeFixStatus(Room room){
+        if(room.getFreeStatus())
+            roomDao.changeFixStatus(room);
+        else System.out.println("Комната занята.");
+    }
 }
  /*   public String putInTheRoom(List<Room> hotel){
         System.out.println("В какой номер поселить?");

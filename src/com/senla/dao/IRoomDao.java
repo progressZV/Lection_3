@@ -7,4 +7,5 @@ public interface IRoomDao{
     void deleteRoom(int number);
     void getList(String str);
     void changeCostRoom(Room room);
+    void changeFixStatus(Room room);
 }
