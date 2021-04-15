@@ -1,6 +1,8 @@
 package com.senla.service;
 
 import com.senla.dao.FileClientDao;
+import com.senla.dao.FileStreamReader;
+import com.senla.dao.FileStreamWriter;
 import com.senla.dao.IClientDao;
 import com.senla.entity.Client;
 import com.senla.entity.Room;
@@ -9,8 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientService {
-      private IClientDao clientService = new FileClientDao();
+      private IClientDao clientService = new FileClientDao(new FileStreamWriter("Clients.txt"), new FileStreamReader("Clients.txt"));
       private final List<Client> clients = new ArrayList<>();
+
 
     public void saveClient(Room room, Client client) {
 

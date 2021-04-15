@@ -4,8 +4,13 @@ import com.senla.entity.Service;
 
 public class FileServiceDao implements IServiceDao{
 
-    private final FileStreamWriter fileStreamWriter = new FileStreamWriter("Hotel.txt");
-    private final FileStreamReader fileStreamReader = new FileStreamReader();
+    private final FileStreamWriter fileStreamWriter;
+    private final FileStreamReader fileStreamReader;
+
+    public FileServiceDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader){
+        this.fileStreamWriter = fileStreamWriter;
+        this.fileStreamReader = fileStreamReader;
+    }
 
     @Override
     public void saveService(Service service) {

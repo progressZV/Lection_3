@@ -2,9 +2,12 @@ package com.senla.application;
 
 import com.senla.entity.*;
 import com.senla.facade.AdministratorService;
+import com.senla.service.RoomService;
+import com.senla.service.ServiceOfServices;
 
 public class Initializer {
     public void initialize(){
+
         AdministratorService administratorService = new AdministratorService();
 
         Room room = new Room(1,20, 3, 2); // параметры

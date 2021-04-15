@@ -1,6 +1,8 @@
 package com.senla.service;
 
 import com.senla.dao.FileServiceDao;
+import com.senla.dao.FileStreamReader;
+import com.senla.dao.FileStreamWriter;
 import com.senla.dao.IServiceDao;
 import com.senla.entity.Service;
 
@@ -9,8 +11,9 @@ import java.util.List;
 
 public class ServiceOfServices {
 
-    private IServiceDao serviceDao= new FileServiceDao();
+    private IServiceDao serviceDao = new FileServiceDao(new FileStreamWriter("Services.txt"), new FileStreamReader("Services.txt"));;
     private final List<Service> services = new ArrayList();
+
 
     public void addService(Service service) {
             for (Service service1 : services) {

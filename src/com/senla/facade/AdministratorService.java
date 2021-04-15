@@ -10,9 +10,6 @@ public class AdministratorService {
     private ServiceOfServices service = new ServiceOfServices();
     private ClientService clientService = new ClientService();
 
-
-
-
     public void addRoom(Room room) {
         roomService.addRoom(room);
     }

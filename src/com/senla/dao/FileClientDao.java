@@ -5,9 +5,13 @@ import com.senla.entity.Room;
 
 public class FileClientDao implements IClientDao{
 
-    private final FileStreamWriter fileStreamWriter = new FileStreamWriter("Hotel.txt");
-    private final FileStreamReader fileStreamReader = new FileStreamReader();
+    private final FileStreamWriter fileStreamWriter;
+    private final FileStreamReader fileStreamReader;
 
+    public FileClientDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader){
+        this.fileStreamWriter = fileStreamWriter;
+        this.fileStreamReader = fileStreamReader;
+    }
 
     @Override
     public void saveClient(Room room, Client client) {

@@ -4,25 +4,28 @@ import com.senla.entity.Room;
 
 public class FileRoomDao implements IRoomDao{
 
-    private final FileStreamWriter fileStreamWriter = new FileStreamWriter("Hotel.txt");
-    private final FileStreamReader fileStreamReader = new FileStreamReader();
+    private final FileStreamWriter fileStreamWriter;
+    private final FileStreamReader fileStreamReader;
+
+    public FileRoomDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader){
+        this.fileStreamWriter = fileStreamWriter;
+        this.fileStreamReader = fileStreamReader;
+    }
 
     @Override
     public void saveRoom(Room room) {
-        fileStreamWriter.write("Запись комнаты:" + "\n");
         fileStreamWriter.write(room.toString() + "\n");
     }
 
     @Override
     public void deleteRoom(int number) {
-        fileStreamWriter.write("Удаление комнаты:" + "\n");
-        fileStreamWriter.write("Комната с номером " + number + " удалена." + "\n" + "\n");
+       String str =  fileStreamReader.readFile();
+       System.out.println(str);
     }
 
     @Override
     public void getList(String str){
-        fileStreamWriter.write("Список комнат:" + "\n");
-       fileStreamWriter.write(str);
+        str = fileStreamReader.readFile();
     }
 
     @Override

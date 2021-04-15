@@ -7,8 +7,9 @@ import java.util.*;
 
 public class RoomService {
 
-    private IRoomDao roomDao = new FileRoomDao();
+    private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"));;
     private final List<Room> rooms = new ArrayList<>();
+
 
     public void addRoom(Room room) {
         if(rooms.size() == 0) {
