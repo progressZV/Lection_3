@@ -10,7 +10,7 @@ public class Initializer {
 
         AdministratorService administratorService = new AdministratorService();
 
-        Room room = new Room(1,20, 3, 2); // параметры
+      /*  Room room = new Room(1,20, 3, 2); // параметры
         administratorService.addRoom(room) ;
         Service service = new Service("Бар", 200); // параметры
         administratorService.addService(service);
@@ -36,6 +36,10 @@ public class Initializer {
 
         administratorService.checkAllRooms();
         administratorService.checkAllServices();
-        administratorService.checkAllClients();
+        administratorService.checkAllClients();*/
+
+
+        Room room = new Room(2,3,4,5);
+        administratorService.addRoom(room);
     }
 }

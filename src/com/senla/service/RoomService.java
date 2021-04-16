@@ -8,11 +8,11 @@ import java.util.*;
 public class RoomService {
 
     private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"));;
-    private final List<Room> rooms = new ArrayList<>();
+  //  private final List<Room> rooms = new ArrayList<>();
 
 
     public void addRoom(Room room) {
-        if(rooms.size() == 0) {
+  /*      if(rooms.size() == 0) {
             rooms.add(room);
             roomDao.saveRoom(room);
             return;
@@ -24,31 +24,37 @@ public class RoomService {
                     return;
                 }
             }
-            System.out.println("Номер уже существует" + "\n");
+            System.out.println("Номер уже существует" + "\n");*/
+        var room1 = roomDao.getRooms().stream().filter(r -> r.getNumber() == room.getNumber()).findFirst();
+        if (room1.isPresent()){
+            System.out.println("Room with this number already exists.");
+            return;
+        }
+            roomDao.saveRoom(room);
+            System.out.println("Room " + room.getNumber() + " was added successfully.");
     }
 
     public void deleteRoom(int number) {
-        if (rooms.size() > 0) {
-            for (Room room : rooms) {
-                if (room.getNumber() == number) {
-                    rooms.remove(room);
-                    roomDao.deleteRoom(number);
-                    return;
-                }
-            }
+        List<Room> rooms = roomDao.getRooms();
+        Room room = roomDao.getRooms().stream().filter(r -> r.getNumber() == number).findFirst().orElse(null);
+        if (room == null) {
+            System.out.println("Can't find the room.");
+            return;
         }
-            System.out.println("Комнаты не существует." + "\n");
+        rooms.remove(room);
+        StringBuilder sb = new StringBuilder();
+        for (Room room1 : rooms) {
+            sb.append(room1.toString());
+        }
+        roomDao.deleteRoom(sb.toString());
+        System.out.println("Room " + room.getNumber() + " was removed successfully.");
     }
 
-    public void getAllRooms() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Room room : rooms) {
-            stringBuilder.append(room.toString());
-        }
-        roomDao.getList(stringBuilder.toString() + "\n");
+    public List<Room> getAllRooms() {
+            return roomDao.getRooms();
     }
 
-    public void changeCostRoom(Room room, double cost) {
+    /*public void changeCostRoom(Room room, double cost) {
         for (Room room1 : rooms) {
             if (room1.getNumber() == room.getNumber()) {
                 if (!room.getFreeStatus()) {
@@ -65,7 +71,7 @@ public class RoomService {
             } else
                 System.out.println("Комнаты не существует.");
         }
-    }
+    }*/
 
     public void changeFixStatus(Room room){
         if(room.getFreeStatus())

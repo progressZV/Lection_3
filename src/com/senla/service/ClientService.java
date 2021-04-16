@@ -1,9 +1,6 @@
 package com.senla.service;
 
-import com.senla.dao.FileClientDao;
-import com.senla.dao.FileStreamReader;
-import com.senla.dao.FileStreamWriter;
-import com.senla.dao.IClientDao;
+import com.senla.dao.*;
 import com.senla.entity.Client;
 import com.senla.entity.Room;
 
@@ -12,38 +9,41 @@ import java.util.List;
 
 public class ClientService {
       private IClientDao clientService = new FileClientDao(new FileStreamWriter("Clients.txt"), new FileStreamReader("Clients.txt"));
-      private final List<Client> clients = new ArrayList<>();
+    //  private final List<Client> clients = new ArrayList<>();
 
 
-    public void saveClient(Room room, Client client) {
+    public void addClient(Room room, Client client) {
 
         if (room.getFreeStatus() && !room.getFixStatus()) {
             room.setFreeStatus(false);
-            clients.add(client);
-            clientService.saveClient(room, client);
+            clientService.saveClient(client);
+            System.out.println("Клиент " + client.getName() + " успешно заслелён в комнату №" + room.getNumber());
             return;
         }
             System.out.println("Номер занят или не существует." + "\n");
     }
+
     public void removeClient(String name, Room room) {
-        if (clients.size() > 0) {
-            for (Client client : clients) {
-                if (client.getName() == name) {
-                    clients.remove(client);
-                    room.setFreeStatus(true);
-                    clientService.removeClient(name + " ");
-                    return;
-                }
-            }
+        List<Client> clients = clientService.getClients();
+        Client client = clientService.getClients().stream().filter(c -> c.getName().equals(name)).findFirst().orElse(null);
+        if(client == null){
+            System.out.println("Can't find a client.");
+            return;
         }
-            System.out.println("Такого клиента нету, либо он не прописан в данном номере." + "\n");
+        if(client.getAppsNumber() != room.getNumber()){
+            System.out.println("Клиент не поселён в данном номере.");
+            return;
+        }
+        clients.remove(client);
+        StringBuilder sb = new StringBuilder();
+        for (Client client1 : clients) {
+            sb.append(client1.toString());
+        }
+        clientService.removeClient(sb.toString());
+        System.out.println("Client " + client.getName() + " was removed from room №" + client.getAppsNumber());
     }
-    public void getClients(){
-        StringBuilder stringBuilder = new StringBuilder();
-       for(Client client : clients){
-           stringBuilder.append(client.getName() + "\n");
-       }
-       clientService.getClients(stringBuilder.toString() + "\n");
+    public List<Client> getClients(){
+        return  clientService.getClients();
     }
 }
 

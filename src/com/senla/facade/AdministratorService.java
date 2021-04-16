@@ -22,7 +22,7 @@ public class AdministratorService {
 
     public void removeService(String name) { service.deleteService(name);}
 
-    public void addClient(Room room, Client client) { clientService.saveClient(room, client); }
+    public void addClient(Room room, Client client) { clientService.addClient(room, client); }
 
     public void removeClient(String name, Room room) { clientService.removeClient(name, room); }
 
@@ -32,7 +32,7 @@ public class AdministratorService {
 
     public void checkAllClients() { clientService.getClients(); }
 
-    public void changeCostRoom(Room room, double cost) { roomService.changeCostRoom(room, cost); }
+  //  public void changeCostRoom(Room room, double cost) { roomService.changeCostRoom(room, cost); }
 
     public void changeFixStatus(Room room) { roomService.changeFixStatus(room); }
 }

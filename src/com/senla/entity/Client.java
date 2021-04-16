@@ -5,8 +5,9 @@ public class Client {
     private String name = null;
     private int appsNumber;
 
-    public Client(String name){
+    public Client(String name, int appsNumber){
         this.name = name;
+        this.appsNumber = appsNumber;
     }
 
     public String getName() {
@@ -21,12 +22,10 @@ public class Client {
         return appsNumber;
     }
 
-    public void setAppsNumber(int appsNumber) {
-        this.appsNumber = appsNumber;
-    }
 
     @Override
     public String toString(){
-        return "Клиент " + getName();
+        return getName() + "\t" + getAppsNumber() + "\n";
     }
+
 }

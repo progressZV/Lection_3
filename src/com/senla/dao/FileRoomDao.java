@@ -2,6 +2,9 @@ package com.senla.dao;
 
 import com.senla.entity.Room;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FileRoomDao implements IRoomDao{
 
     private final FileStreamWriter fileStreamWriter;
@@ -14,18 +17,25 @@ public class FileRoomDao implements IRoomDao{
 
     @Override
     public void saveRoom(Room room) {
-        fileStreamWriter.write(room.toString() + "\n");
+        fileStreamWriter.write(room.toString());
     }
 
     @Override
-    public void deleteRoom(int number) {
-       String str =  fileStreamReader.readFile();
-       System.out.println(str);
+    public void deleteRoom(String str) {
+        fileStreamWriter.write(str);
     }
 
     @Override
-    public void getList(String str){
-        str = fileStreamReader.readFile();
+    public List<Room> getRooms(){ // добавить статусы
+       String fileData = fileStreamReader.readFile();
+       List<Room> rooms = new ArrayList<>();
+        String[] ary = fileData.split("TABTAB");
+
+       for(int i = 0; i<ary.length; i++){
+           String[] words = ary[i].split("\t");
+           rooms.add(new Room(Integer.parseInt(words[0]), Double.parseDouble(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3])));
+       }
+       return rooms;
     }
 
     @Override

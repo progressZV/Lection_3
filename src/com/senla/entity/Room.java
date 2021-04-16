@@ -63,8 +63,8 @@ public class Room {
     }
     @Override
     public String toString(){
-        return "Номер:" + getNumber() + " Цена:" +
-                getCost() + " Кол-во комнат:" + getRooms_count() +
-                " Кол-во звёзд:" + getStars_count() + "\n";
+        return  getNumber() + "\t" +
+                getCost() + "\t" + getRooms_count() +
+                "\t" + getStars_count() + "\n";
     }
 }

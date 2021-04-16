@@ -27,7 +27,7 @@ public class Service {
 
     @Override
     public String toString(){
-        return "Сервис " + getName() + " Цена:" +
+        return getName() + "\t" +
                 getCost() + "\n";
     }
 }

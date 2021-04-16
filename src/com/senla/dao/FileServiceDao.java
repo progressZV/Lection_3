@@ -1,6 +1,10 @@
 package com.senla.dao;
 
+import com.senla.entity.Room;
 import com.senla.entity.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileServiceDao implements IServiceDao{
 
@@ -14,20 +18,36 @@ public class FileServiceDao implements IServiceDao{
 
     @Override
     public void saveService(Service service) {
-        fileStreamWriter.write("Запись сервиса:" + "\n");
-        fileStreamWriter.write(service.toString() + "\n");
+        fileStreamWriter.write(service.toString());
     }
 
     @Override
     public void deleteService(String name) {
-        fileStreamWriter.write("Удаление сервиса:" + "\n");
-        fileStreamWriter.write("Сервис " + name + " удалён." + "\n" + "\n");
+        List<Service> services = getServices();
+        Service service = services.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
+        if(service == null){
+            System.out.println("Can't find the service.");
+            return;
+        }
+        services.remove(service);
+        StringBuilder sb = new StringBuilder();
+        for(Service service1 : services){
+            sb.append(service1.toString());
+        }
+        fileStreamWriter.write(sb.toString());
     }
 
     @Override
-    public void getService(String str) {
-        fileStreamWriter.write("Список сервисов:" + "\n");
-        fileStreamWriter.write(str);
+    public List<Service> getServices() {
+        String fileData = fileStreamReader.readFile();
+        List<Service> services = new ArrayList<>();
+        String[] ary = fileData.split("TABTAB");
+
+        for(int i = 0; i< ary.length; i++){
+            String[] words = ary[i].split("\t");
+            services.add(new Service(words[0], Double.parseDouble(words[1])));
+        }
+        return services;
     }
 
 }
