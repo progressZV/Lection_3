@@ -41,11 +41,15 @@ public class FileServiceDao implements IServiceDao{
     public List<Service> getServices() {
         String fileData = fileStreamReader.readFile();
         List<Service> services = new ArrayList<>();
-        String[] ary = fileData.split("TABTAB");
+        if(!fileData.isEmpty()) {
+            String[] ary = fileData.split("\n");
 
-        for(int i = 0; i< ary.length; i++){
-            String[] words = ary[i].split("\t");
-            services.add(new Service(words[0], Double.parseDouble(words[1])));
+            for (int i = 0; i < ary.length; i++) { // check
+                String[] words = ary[i].split("\t");
+                for(int j = 0; j< words.length; j++)
+                    words[j] = words[j].trim();
+                services.add(new Service(words[0], Double.parseDouble(words[1])));
+            }
         }
         return services;
     }

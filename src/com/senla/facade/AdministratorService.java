@@ -5,6 +5,8 @@ import com.senla.service.ClientService;
 import com.senla.service.RoomService;
 import com.senla.service.ServiceOfServices;
 
+import java.util.List;
+
 public class AdministratorService {
     private RoomService roomService = new RoomService();
     private ServiceOfServices service = new ServiceOfServices();
@@ -26,11 +28,11 @@ public class AdministratorService {
 
     public void removeClient(String name, Room room) { clientService.removeClient(name, room); }
 
-    public void checkAllRooms() { roomService.getAllRooms(); }
+    public List<Room> checkAllRooms() { return roomService.getAllRooms(); }
 
-    public void checkAllServices() { service.getAllServices(); }
+    public List<Service> checkAllServices() { return service.getAllServices(); }
 
-    public void checkAllClients() { clientService.getClients(); }
+    public List<Client> checkAllClients() { return clientService.getClients(); }
 
   //  public void changeCostRoom(Room room, double cost) { roomService.changeCostRoom(room, cost); }
 

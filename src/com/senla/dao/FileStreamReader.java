@@ -12,12 +12,14 @@ public class FileStreamReader {
     }
 
     public String readFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) { // check на пустые строки
             String str;
             StringBuilder fileData = new StringBuilder();
-            br.readLine(); // читаем со 2 строки
-            while ((str = br.readLine()) != null)
+        //    br.readLine(); // читаем со 2 строки
+            while ((str = br.readLine()) != null) {
+                if(str.isEmpty()) break;
                 fileData.append(str).append("\n");
+            }
             return fileData.toString();
         } catch (IOException ex){
             return ex.getMessage();

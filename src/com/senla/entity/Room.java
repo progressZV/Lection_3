@@ -63,7 +63,7 @@ public class Room {
     }
     @Override
     public String toString(){
-        return  getNumber() + "\t" +
+        return getNumber() + "\t" +
                 getCost() + "\t" + getRooms_count() +
                 "\t" + getStars_count() + "\n";
     }

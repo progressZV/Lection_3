@@ -28,13 +28,17 @@ public class FileRoomDao implements IRoomDao{
     @Override
     public List<Room> getRooms(){ // добавить статусы
        String fileData = fileStreamReader.readFile();
-       List<Room> rooms = new ArrayList<>();
-        String[] ary = fileData.split("TABTAB");
-
-       for(int i = 0; i<ary.length; i++){
-           String[] words = ary[i].split("\t");
-           rooms.add(new Room(Integer.parseInt(words[0]), Double.parseDouble(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3])));
-       }
+        List<Room> rooms = new ArrayList<>();
+        if(!fileData.isEmpty()) {
+       // String[] ary = fileData.split("TABTAB" );
+        String[] ary = fileData.split("\n");
+            for (int i = 0; i < ary.length; i++) { //check
+                String[] words = ary[i].split("\t");
+                for(int j = 0; j< words.length; j++)
+                words[j] = words[j].trim();
+                rooms.add(new Room(Integer.parseInt(words[0]), Double.parseDouble(words[1]), Integer.parseInt(words[2]), Integer.parseInt(words[3])));
+            }
+        }
        return rooms;
     }
 

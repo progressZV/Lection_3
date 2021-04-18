@@ -20,10 +20,11 @@ public class FileStreamWriter {
     public void write(String str){
 
         boolean flag = checkFile(path);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path,false))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path,true))) {
             if (flag) {
-                bw.write(str);
+        //      bw.write("id" + "\t" + "number"+ "\t" + "price" + "\t" + "clientName");
             }
+            bw.write(str);
         }
             catch(IOException ex)
             {

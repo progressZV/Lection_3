@@ -42,11 +42,15 @@ public class FileClientDao implements IClientDao{
     public List<Client> getClients() {
         String fileData = fileStreamReader.readFile();
         List<Client> clients = new ArrayList<>();
-        String[] ary = fileData.split("TABTAB");
+        if(!fileData.isEmpty()) {
+            String[] ary = fileData.split("\n");
 
-        for(int i = 0; i<ary.length; i++){
-            String[] words = ary[i].split("\t");
-            clients.add(new Client(words[0], Integer.parseInt(words[1])));
+            for (int i = 0; i < ary.length; i++) { //check
+                String[] words = ary[i].split("\t");
+                for(int j = 0; j< words.length; j++)
+                    words[j] = words[j].trim();
+                clients.add(new Client(words[0], Integer.parseInt(words[1])));
+            }
         }
         return clients;
     }
