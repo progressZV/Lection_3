@@ -19,23 +19,12 @@ public class FileClientDao implements IClientDao{
 
     @Override
     public void saveClient(Client client) {
-        fileStreamWriter.write(client.toString());
+        fileStreamWriter.write(client.toString(), true);
     }
 
     @Override
     public void removeClient(String name) {
-        List<Client> clients = getClients();
-        Client client = clients.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
-        if(client == null){
-            System.out.println("Can't find the service.");
-            return;
-        }
-        clients.remove(client);
-        StringBuilder sb = new StringBuilder();
-        for(Client client1 : clients){
-            sb.append(client1.toString());
-        }
-        fileStreamWriter.write(sb.toString());
+        fileStreamWriter.write(name,false);
     }
 
     @Override
@@ -44,7 +33,6 @@ public class FileClientDao implements IClientDao{
         List<Client> clients = new ArrayList<>();
         if(!fileData.isEmpty()) {
             String[] ary = fileData.split("\n");
-
             for (int i = 0; i < ary.length; i++) { //check
                 String[] words = ary[i].split("\t");
                 for(int j = 0; j< words.length; j++)

@@ -11,7 +11,7 @@ public class Room {
     private int stars_count;
     private int rooms_count;
 
-   public Room(int number, double cost, int stars_count, int rooms_count){
+   public Room(int number, double cost, int stars_count, int rooms_count, boolean freeStatus, boolean fixStatus){
         this.number = number;
         this.cost = cost;
         this.freeStatus = true;
@@ -65,6 +65,6 @@ public class Room {
     public String toString(){
         return getNumber() + "\t" +
                 getCost() + "\t" + getRooms_count() +
-                "\t" + getStars_count() + "\n";
+                "\t" + getStars_count() + "\t" + getFreeStatus() + "\t" + getFixStatus() + "\n";
     }
 }

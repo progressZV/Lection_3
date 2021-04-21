@@ -18,23 +18,12 @@ public class FileServiceDao implements IServiceDao{
 
     @Override
     public void saveService(Service service) {
-        fileStreamWriter.write(service.toString());
+        fileStreamWriter.write(service.toString(), true);
     }
 
     @Override
     public void deleteService(String name) {
-        List<Service> services = getServices();
-        Service service = services.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
-        if(service == null){
-            System.out.println("Can't find the service.");
-            return;
-        }
-        services.remove(service);
-        StringBuilder sb = new StringBuilder();
-        for(Service service1 : services){
-            sb.append(service1.toString());
-        }
-        fileStreamWriter.write(sb.toString());
+        fileStreamWriter.write(name, false);
     }
 
     @Override

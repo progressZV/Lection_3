@@ -36,9 +36,13 @@ public class RoomService {
 
     public void deleteRoom(int number) {
         List<Room> rooms = roomDao.getRooms();
-        Room room = roomDao.getRooms().stream().filter(r -> r.getNumber() == number).findFirst().orElse(null);
+        Room room = rooms.stream().filter(r -> r.getNumber() == number).findFirst().orElse(null);
         if (room == null) {
             System.out.println("Can't find the room.");
+            return;
+        }
+        if(!room.getFreeStatus()){
+            System.out.println("This room has a client in.");
             return;
         }
         rooms.remove(room);
@@ -51,7 +55,11 @@ public class RoomService {
     }
 
     public List<Room> getAllRooms() {
-            return roomDao.getRooms();
+            List<Room> rooms = roomDao.getRooms();
+        for(Room room : rooms){
+            System.out.println(room.toString());
+        }
+        return  rooms;
     }
 
     /*public void changeCostRoom(Room room, double cost) {

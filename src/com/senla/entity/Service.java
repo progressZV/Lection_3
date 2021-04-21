@@ -27,7 +27,6 @@ public class Service {
 
     @Override
     public String toString(){
-        return getName() + "\t" +
-                getCost() + "\n";
+        return getName() + "\t" + getCost() + "\n";
     }
 }

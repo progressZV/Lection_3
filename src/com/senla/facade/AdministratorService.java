@@ -28,13 +28,14 @@ public class AdministratorService {
 
     public void removeClient(String name, Room room) { clientService.removeClient(name, room); }
 
-    public List<Room> checkAllRooms() { return roomService.getAllRooms(); }
+    public void checkAllRooms() { roomService.getAllRooms(); }
 
-    public List<Service> checkAllServices() { return service.getAllServices(); }
+    public void checkAllServices() { service.getAllServices(); }
 
-    public List<Client> checkAllClients() { return clientService.getClients(); }
+    public void checkAllClients() { clientService.getClients(); }
 
   //  public void changeCostRoom(Room room, double cost) { roomService.changeCostRoom(room, cost); }
 
     public void changeFixStatus(Room room) { roomService.changeFixStatus(room); }
+
 }

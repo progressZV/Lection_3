@@ -42,32 +42,30 @@ public class Initializer {
         administratorService.checkAllClients();*/
 
 
-        Room room = new Room(2,3,4,5);
+        Room room = new Room(2,3,4,5, true ,true);
         administratorService.addRoom(room);
         Service service = new Service("Bar", 200);
         administratorService.addService(service);
         Client client = new Client("Tom", 2);
         administratorService.addClient(room, client);
 
-      Room room2 = new Room(3,4,5,6);
+      Room room2 = new Room(3,4,5,6, true, true);
       administratorService.addRoom(room2);
       Service service2 = new Service("Massage", 100);
       administratorService.addService(service2);
       Client client1 = new Client("Jhon", 3);
       administratorService.addClient(room2,client1);
 
-        List<Room> rooms =  administratorService.checkAllRooms();
-        List<Service> services = administratorService.checkAllServices();
-        List<Client> clients = administratorService.checkAllClients();
+      administratorService.checkAllRooms();
+      administratorService.checkAllServices();
+      administratorService.checkAllClients();
 
-        for(Room room1 : rooms){
-            System.out.println(room1.toString());
-        }
-        for(Service service1 : services){
-            System.out.println(service1.toString());
-        }
-        for(Client client2 : clients){
-            System.out.println(client2.toString());
-        }
+      administratorService.removeRoom(2);
+      administratorService.removeClient("Tom", room);
+      administratorService.removeService("Bar");
+
+        administratorService.checkAllRooms();
+        administratorService.checkAllServices();
+        administratorService.checkAllClients();
     }
 }

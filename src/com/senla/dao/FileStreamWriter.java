@@ -17,14 +17,14 @@ public class FileStreamWriter {
         return file.exists();
     }
 
-    public void write(String str){
+    public void write(String str, boolean append){
 
         boolean flag = checkFile(path);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path,true))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, append))) {
             if (flag) {
         //      bw.write("id" + "\t" + "number"+ "\t" + "price" + "\t" + "clientName");
+                bw.write(str);
             }
-            bw.write(str);
         }
             catch(IOException ex)
             {

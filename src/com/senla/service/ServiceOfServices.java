@@ -29,7 +29,7 @@ public class ServiceOfServices {
 
     public void deleteService(String name) {
         List<Service> services = serviceDao.getServices();
-        Service service = serviceDao.getServices().stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
+        Service service = services.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
         if (service == null) {
             System.out.println("Can't find the service.");
             return;
@@ -44,6 +44,10 @@ public class ServiceOfServices {
     }
 
     public List<Service> getAllServices() {
-        return serviceDao.getServices();
+        List<Service> services = serviceDao.getServices();
+        for(Service service : services){
+            System.out.println(service.toString());
+        }
+        return services;
     }
 }
