@@ -34,6 +34,26 @@ public class RoomService {
             System.out.println("Room " + room.getNumber() + " was added successfully.");
     }
 
+    public void changeFreeStatus(Room room, boolean status){
+        List<Room> rooms = roomDao.getRooms();
+        var room1 = rooms.stream().filter(r -> r.getNumber() == room.getNumber()).findFirst().orElse(null);
+        if (room1 == null){
+            System.out.println("Can't find the room.");
+            return;
+        }
+        if(room1.getFreeStatus() == status){
+            System.out.println("We have already this status.");
+            return;
+        }
+        room1.setFreeStatus(status);
+        StringBuilder sb = new StringBuilder();
+        for (Room room2 : rooms) {
+            sb.append(room2.toString());
+        }
+        roomDao.deleteRoom(sb.toString());
+        System.out.println("Status changed for Room №" + room.getNumber());
+    }
+
     public void deleteRoom(int number) {
         List<Room> rooms = roomDao.getRooms();
         Room room = rooms.stream().filter(r -> r.getNumber() == number).findFirst().orElse(null);
@@ -51,6 +71,7 @@ public class RoomService {
             sb.append(room1.toString());
         }
         roomDao.deleteRoom(sb.toString());
+
         System.out.println("Room " + room.getNumber() + " was removed successfully.");
     }
 

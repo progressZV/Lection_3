@@ -14,8 +14,8 @@ public class Room {
    public Room(int number, double cost, int stars_count, int rooms_count, boolean freeStatus, boolean fixStatus){
         this.number = number;
         this.cost = cost;
-        this.freeStatus = true;
-        this.fixStatus = false;
+        this.freeStatus = freeStatus;
+        this.fixStatus = fixStatus;
         this.stars_count = stars_count;
         this.rooms_count = rooms_count;
     }

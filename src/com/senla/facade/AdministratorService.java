@@ -38,4 +38,6 @@ public class AdministratorService {
 
     public void changeFixStatus(Room room) { roomService.changeFixStatus(room); }
 
+    public void changeFreeStatus(Room room, boolean status) { roomService.changeFreeStatus(room,status); }
+
 }

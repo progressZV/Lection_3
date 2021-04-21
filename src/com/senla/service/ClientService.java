@@ -15,6 +15,7 @@ public class ClientService {
 
         if (room.getFreeStatus() && !room.getFixStatus()) {
             clientService.saveClient(client);
+            room.setFreeStatus(false);
             System.out.println("Клиент " + client.getName() + " успешно заслелён в комнату №" + room.getNumber());
             return;
         }
@@ -33,6 +34,7 @@ public class ClientService {
             return;
         }
         clients.remove(client);
+        room.setFreeStatus(true);
         StringBuilder sb = new StringBuilder();
         for (Client client1 : clients) {
             sb.append(client1.toString());

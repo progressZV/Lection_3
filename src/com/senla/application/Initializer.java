@@ -42,19 +42,21 @@ public class Initializer {
         administratorService.checkAllClients();*/
 
 
-        Room room = new Room(2,3,4,5, true ,true);
+        Room room = new Room(2,3,4,5, true, false);
         administratorService.addRoom(room);
         Service service = new Service("Bar", 200);
         administratorService.addService(service);
         Client client = new Client("Tom", 2);
         administratorService.addClient(room, client);
+        administratorService.changeFreeStatus(room, false);
 
-      Room room2 = new Room(3,4,5,6, true, true);
+      Room room2 = new Room(3,4,5,6, true, false);
       administratorService.addRoom(room2);
       Service service2 = new Service("Massage", 100);
       administratorService.addService(service2);
       Client client1 = new Client("Jhon", 3);
       administratorService.addClient(room2,client1);
+      administratorService.changeFreeStatus(room2, false);
 
       administratorService.checkAllRooms();
       administratorService.checkAllServices();
@@ -62,6 +64,7 @@ public class Initializer {
 
       administratorService.removeRoom(2);
       administratorService.removeClient("Tom", room);
+     // administratorService.changeFreeStatus(room, true);
       administratorService.removeService("Bar");
 
         administratorService.checkAllRooms();
