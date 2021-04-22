@@ -11,27 +11,28 @@ public class ClientService {
       private IClientDao clientService = new FileClientDao(new FileStreamWriter("Clients.txt"), new FileStreamReader("Clients.txt"));
 
 
-    public void addClient(Room room, Client client) {
+    public boolean addClient(Room room, Client client) {
 
         if (room.getFreeStatus() && !room.getFixStatus()) {
             clientService.saveClient(client);
             room.setFreeStatus(false);
             System.out.println("Клиент " + client.getName() + " успешно заслелён в комнату №" + room.getNumber());
-            return;
+            return true;
         }
             System.out.println("Номер занят или не существует." + "\n");
+        return false;
     }
 
-    public void removeClient(String name, Room room) {
+    public boolean removeClient(String name, Room room) {
         List<Client> clients = clientService.getClients();
         Client client = clients.stream().filter(c -> c.getName().equals(name)).findFirst().orElse(null);
         if(client == null){
             System.out.println("Can't find a client.");
-            return;
+            return false;
         }
         if(client.getAppsNumber() != room.getNumber()){
             System.out.println("Клиент не поселён в данном номере.");
-            return;
+            return false;
         }
         clients.remove(client);
         room.setFreeStatus(true);
@@ -41,6 +42,7 @@ public class ClientService {
         }
         clientService.removeClient(sb.toString());
         System.out.println("Client " + client.getName() + " was removed from room №" + client.getAppsNumber());
+        return true;
     }
 
     public List<Client> getClients(){

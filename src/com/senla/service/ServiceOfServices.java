@@ -43,6 +43,26 @@ public class ServiceOfServices {
         System.out.println("Service " + service.getName() + " was removed successfully.");
     }
 
+    public void changeCostService(Service service, double cost) {
+        List<Service> services = serviceDao.getServices();
+        Service service1 = services.stream().filter(s -> s.getName().equals(service.getName())).findFirst().orElse(null);
+        if (service1 == null) {
+            System.out.println("Can't find the service.");
+            return;
+        }
+        if (service1.getCost() == cost) {
+            System.out.println("We have already this cost.");
+            return;
+        }
+        service1.setCost(cost);
+        StringBuilder sb = new StringBuilder();
+        for (Service service2 : services) {
+            sb.append(service2.toString());
+        }
+        serviceDao.deleteService(sb.toString());
+        System.out.println("Cost changed for Room №" + service.getName());
+    }
+
     public List<Service> getAllServices() {
         List<Service> services = serviceDao.getServices();
         for(Service service : services){

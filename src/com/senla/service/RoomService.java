@@ -7,8 +7,9 @@ import java.util.*;
 
 public class RoomService {
 
-    private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"));;
-  //  private final List<Room> rooms = new ArrayList<>();
+    private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"));
+    ;
+    //  private final List<Room> rooms = new ArrayList<>();
 
 
     public void addRoom(Room room) {
@@ -26,22 +27,22 @@ public class RoomService {
             }
             System.out.println("Номер уже существует" + "\n");*/
         var room1 = roomDao.getRooms().stream().filter(r -> r.getNumber() == room.getNumber()).findFirst();
-        if (room1.isPresent()){
+        if (room1.isPresent()) {
             System.out.println("Room with this number already exists.");
             return;
         }
-            roomDao.saveRoom(room);
-            System.out.println("Room " + room.getNumber() + " was added successfully.");
+        roomDao.saveRoom(room);
+        System.out.println("Room " + room.getNumber() + " was added successfully.");
     }
 
-    public void changeFreeStatus(Room room, boolean status){
+    public void changeFreeStatus(Room room, boolean status) {
         List<Room> rooms = roomDao.getRooms();
         var room1 = rooms.stream().filter(r -> r.getNumber() == room.getNumber()).findFirst().orElse(null);
-        if (room1 == null){
+        if (room1 == null) {
             System.out.println("Can't find the room.");
             return;
         }
-        if(room1.getFreeStatus() == status){
+        if (room1.getFreeStatus() == status) {
             System.out.println("We have already this status.");
             return;
         }
@@ -61,7 +62,7 @@ public class RoomService {
             System.out.println("Can't find the room.");
             return;
         }
-        if(!room.getFreeStatus()){
+        if (!room.getFreeStatus()) {
             System.out.println("This room has a client in.");
             return;
         }
@@ -76,36 +77,51 @@ public class RoomService {
     }
 
     public List<Room> getAllRooms() {
-            List<Room> rooms = roomDao.getRooms();
-        for(Room room : rooms){
+        List<Room> rooms = roomDao.getRooms();
+        for (Room room : rooms) {
             System.out.println(room.toString());
         }
-        return  rooms;
+        return rooms;
     }
 
-    /*public void changeCostRoom(Room room, double cost) {
-        for (Room room1 : rooms) {
-            if (room1.getNumber() == room.getNumber()) {
-                if (!room.getFreeStatus()) {
-                    System.out.println("Комната занята." + "\n");
-                } else {
-                    if (cost == room.getCost()) {
-                        System.out.println("Данная цена не отличается от имеющейся." + "\n");
-                        return;
-                    }
-                    room.setCost(cost);
-                    roomDao.changeCostRoom(room);
-                    return;
-                }
-            } else
-                System.out.println("Комнаты не существует.");
+    public void changeCostRoom(Room room, double cost) {
+        List<Room> rooms = roomDao.getRooms();
+        var room1 = rooms.stream().filter(r -> r.getNumber() == room.getNumber()).findFirst().orElse(null);
+        if (room1 == null) {
+            System.out.println("Can't find the room.");
+            return;
         }
-    }*/
+        if (room1.getCost() == cost) {
+            System.out.println("We have already this cost.");
+            return;
+        }
+        room1.setCost(cost);
+        StringBuilder sb = new StringBuilder();
+        for (Room room2 : rooms) {
+            sb.append(room2.toString());
+        }
+        roomDao.deleteRoom(sb.toString());
+        System.out.println("Cost changed for Room №" + room.getNumber());
+    }
 
-    public void changeFixStatus(Room room){
-        if(room.getFreeStatus())
-            roomDao.changeFixStatus(room);
-        else System.out.println("Комната занята.");
+    public void changeFixStatus(Room room, boolean fixStatus) {
+        List<Room> rooms = roomDao.getRooms();
+        var room1 = rooms.stream().filter(r -> r.getNumber() == room.getNumber()).findFirst().orElse(null);
+        if (room1 == null) {
+            System.out.println("Can't find the room.");
+            return;
+        }
+        if (room1.getFixStatus() == fixStatus) {
+            System.out.println("We have already this status.");
+            return;
+        }
+        room1.setFixStatus(fixStatus);
+        StringBuilder sb = new StringBuilder();
+        for (Room room2 : rooms) {
+            sb.append(room2.toString());
+        }
+        roomDao.deleteRoom(sb.toString());
+        System.out.println("Status changed for Room №" + room.getNumber());
     }
 }
  /*   public String putInTheRoom(List<Room> hotel){

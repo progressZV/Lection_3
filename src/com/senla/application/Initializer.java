@@ -48,7 +48,6 @@ public class Initializer {
         administratorService.addService(service);
         Client client = new Client("Tom", 2);
         administratorService.addClient(room, client);
-        administratorService.changeFreeStatus(room, false);
 
       Room room2 = new Room(3,4,5,6, true, false);
       administratorService.addRoom(room2);
@@ -56,7 +55,6 @@ public class Initializer {
       administratorService.addService(service2);
       Client client1 = new Client("Jhon", 3);
       administratorService.addClient(room2,client1);
-      administratorService.changeFreeStatus(room2, false);
 
       administratorService.checkAllRooms();
       administratorService.checkAllServices();
@@ -64,7 +62,6 @@ public class Initializer {
 
       administratorService.removeRoom(2);
       administratorService.removeClient("Tom", room);
-     // administratorService.changeFreeStatus(room, true);
       administratorService.removeService("Bar");
 
         administratorService.checkAllRooms();
