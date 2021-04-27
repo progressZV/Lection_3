@@ -9,10 +9,12 @@ public class FileRoomDao implements IRoomDao{
 
     private final FileStreamWriter fileStreamWriter;
     private final FileStreamReader fileStreamReader;
+    private final Parser parser;
 
-    public FileRoomDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader){
+    public FileRoomDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader, Parser parser){
         this.fileStreamWriter = fileStreamWriter;
         this.fileStreamReader = fileStreamReader;
+        this.parser = parser;
     }
 
     @Override
@@ -28,18 +30,7 @@ public class FileRoomDao implements IRoomDao{
     @Override
     public List<Room> getRooms(){ // добавить статусы
        String fileData = fileStreamReader.readFile();
-        List<Room> rooms = new ArrayList<>();
-        if(!fileData.isEmpty()) {
-        String[] ary = fileData.split("\n");
-            for (int i = 0; i < ary.length; i++) { //check
-                String[] words = ary[i].split("\t");
-                for(int j = 0; j< words.length; j++)
-                words[j] = words[j].trim();
-                rooms.add(new Room(Integer.parseInt(words[0]), Double.parseDouble(words[1]), Integer.parseInt(words[2]),
-                        Integer.parseInt(words[3]), Boolean.parseBoolean(words[4]), Boolean.parseBoolean(words[5])));
-            }
-        }
-       return rooms;
+       return parser.convertToRoom(fileData);
     }
 
     @Override

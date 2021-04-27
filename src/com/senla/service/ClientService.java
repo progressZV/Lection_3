@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientService {
-      private IClientDao clientService = new FileClientDao(new FileStreamWriter("Clients.txt"), new FileStreamReader("Clients.txt"));
+      private IClientDao clientService = new FileClientDao(new FileStreamWriter("Clients.txt"), new FileStreamReader("Clients.txt"), new Parser());
 
 
     public boolean addClient(Room room, Client client) {
@@ -38,7 +38,7 @@ public class ClientService {
         room.setFreeStatus(true);
         StringBuilder sb = new StringBuilder();
         for (Client client1 : clients) {
-            sb.append(client1.toString());
+            sb.append(client1.convertToString());
         }
         clientService.removeClient(sb.toString());
         System.out.println("Client " + client.getName() + " was removed from room №" + client.getAppsNumber());
@@ -48,7 +48,7 @@ public class ClientService {
     public List<Client> getClients(){
         List<Client> clients = clientService.getClients();
         for(Client client : clients){
-            System.out.println(client.toString());
+            System.out.println(client.convertToString());
         }
         return clients;
     }

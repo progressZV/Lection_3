@@ -25,8 +25,7 @@ public class Service {
         this.cost = cost;
     }
 
-    @Override
-    public String toString(){
+    public String convertToString(){
         return getName() + "\t" + getCost() + "\n";
     }
 }

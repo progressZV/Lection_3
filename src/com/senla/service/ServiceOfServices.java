@@ -1,9 +1,6 @@
 package com.senla.service;
 
-import com.senla.dao.FileServiceDao;
-import com.senla.dao.FileStreamReader;
-import com.senla.dao.FileStreamWriter;
-import com.senla.dao.IServiceDao;
+import com.senla.dao.*;
 import com.senla.entity.Room;
 import com.senla.entity.Service;
 
@@ -12,7 +9,7 @@ import java.util.List;
 
 public class ServiceOfServices {
 
-    private IServiceDao serviceDao = new FileServiceDao(new FileStreamWriter("Services.txt"), new FileStreamReader("Services.txt"));
+    private IServiceDao serviceDao = new FileServiceDao(new FileStreamWriter("Services.txt"), new FileStreamReader("Services.txt"), new Parser());
     ;
     //   private final List<Service> services = new ArrayList();
 
@@ -37,7 +34,7 @@ public class ServiceOfServices {
         services.remove(service);
         StringBuilder sb = new StringBuilder();
         for (Service service1 : services) {
-            sb.append(service1.toString());
+            sb.append(service1.convertToString());
         }
         serviceDao.deleteService(sb.toString());
         System.out.println("Service " + service.getName() + " was removed successfully.");
@@ -57,7 +54,7 @@ public class ServiceOfServices {
         service1.setCost(cost);
         StringBuilder sb = new StringBuilder();
         for (Service service2 : services) {
-            sb.append(service2.toString());
+            sb.append(service2.convertToString());
         }
         serviceDao.deleteService(sb.toString());
         System.out.println("Cost changed for Room №" + service.getName());
@@ -66,7 +63,7 @@ public class ServiceOfServices {
     public List<Service> getAllServices() {
         List<Service> services = serviceDao.getServices();
         for(Service service : services){
-            System.out.println(service.toString());
+            System.out.println(service.convertToString());
         }
         return services;
     }

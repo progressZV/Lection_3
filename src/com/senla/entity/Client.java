@@ -22,10 +22,7 @@ public class Client {
         return appsNumber;
     }
 
-
-    @Override
-    public String toString(){
+    public String convertToString(){
         return getName() + "\t" + getAppsNumber() + "\n";
     }
-
 }

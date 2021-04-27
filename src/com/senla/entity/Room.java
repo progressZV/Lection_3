@@ -61,8 +61,8 @@ public class Room {
     public void setRooms_count(int rooms_count) {
         this.rooms_count = rooms_count;
     }
-    @Override
-    public String toString(){
+
+    public String convertToString(){
         return getNumber() + "\t" +
                 getCost() + "\t" + getRooms_count() +
                 "\t" + getStars_count() + "\t" + getFreeStatus() + "\t" + getFixStatus() + "\n";

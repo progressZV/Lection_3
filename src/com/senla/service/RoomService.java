@@ -7,25 +7,12 @@ import java.util.*;
 
 public class RoomService {
 
-    private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"));
+    private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"), new Parser());
     ;
     //  private final List<Room> rooms = new ArrayList<>();
 
 
     public void addRoom(Room room) {
-  /*      if(rooms.size() == 0) {
-            rooms.add(room);
-            roomDao.saveRoom(room);
-            return;
-        }
-            for (Room room1 : rooms) {
-                if (room.getNumber() != room1.getNumber() && room.getFreeStatus()) {
-                    rooms.add(room);
-                    roomDao.saveRoom(room);
-                    return;
-                }
-            }
-            System.out.println("Номер уже существует" + "\n");*/
         var room1 = roomDao.getRooms().stream().filter(r -> r.getNumber() == room.getNumber()).findFirst();
         if (room1.isPresent()) {
             System.out.println("Room with this number already exists.");
@@ -49,7 +36,7 @@ public class RoomService {
         room1.setFreeStatus(status);
         StringBuilder sb = new StringBuilder();
         for (Room room2 : rooms) {
-            sb.append(room2.toString());
+            sb.append(room2.convertToString());
         }
         roomDao.deleteRoom(sb.toString());
         System.out.println("Status changed for Room №" + room.getNumber());
@@ -69,7 +56,7 @@ public class RoomService {
         rooms.remove(room);
         StringBuilder sb = new StringBuilder();
         for (Room room1 : rooms) {
-            sb.append(room1.toString());
+            sb.append(room1.convertToString());
         }
         roomDao.deleteRoom(sb.toString());
 
@@ -79,7 +66,7 @@ public class RoomService {
     public List<Room> getAllRooms() {
         List<Room> rooms = roomDao.getRooms();
         for (Room room : rooms) {
-            System.out.println(room.toString());
+            System.out.println(room.convertToString());
         }
         return rooms;
     }
@@ -98,7 +85,7 @@ public class RoomService {
         room1.setCost(cost);
         StringBuilder sb = new StringBuilder();
         for (Room room2 : rooms) {
-            sb.append(room2.toString());
+            sb.append(room2.convertToString());
         }
         roomDao.deleteRoom(sb.toString());
         System.out.println("Cost changed for Room №" + room.getNumber());
@@ -118,7 +105,7 @@ public class RoomService {
         room1.setFixStatus(fixStatus);
         StringBuilder sb = new StringBuilder();
         for (Room room2 : rooms) {
-            sb.append(room2.toString());
+            sb.append(room2.convertToString());
         }
         roomDao.deleteRoom(sb.toString());
         System.out.println("Status changed for Room №" + room.getNumber());

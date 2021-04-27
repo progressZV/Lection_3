@@ -11,10 +11,12 @@ public class FileClientDao implements IClientDao{
 
     private final FileStreamWriter fileStreamWriter;
     private final FileStreamReader fileStreamReader;
+    private final Parser parser;
 
-    public FileClientDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader){
+    public FileClientDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader, Parser parser){
         this.fileStreamWriter = fileStreamWriter;
         this.fileStreamReader = fileStreamReader;
+        this.parser = parser;
     }
 
     @Override
@@ -30,16 +32,6 @@ public class FileClientDao implements IClientDao{
     @Override
     public List<Client> getClients() {
         String fileData = fileStreamReader.readFile();
-        List<Client> clients = new ArrayList<>();
-        if(!fileData.isEmpty()) {
-            String[] ary = fileData.split("\n");
-            for (int i = 0; i < ary.length; i++) { //check
-                String[] words = ary[i].split("\t");
-                for(int j = 0; j< words.length; j++)
-                    words[j] = words[j].trim();
-                clients.add(new Client(words[0], Integer.parseInt(words[1])));
-            }
-        }
-        return clients;
+        return parser.convertToClient(fileData);
     }
 }

@@ -10,10 +10,12 @@ public class FileServiceDao implements IServiceDao{
 
     private final FileStreamWriter fileStreamWriter;
     private final FileStreamReader fileStreamReader;
+    private final Parser parser;
 
-    public FileServiceDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader){
+    public FileServiceDao(FileStreamWriter fileStreamWriter, FileStreamReader fileStreamReader, Parser parser){
         this.fileStreamWriter = fileStreamWriter;
         this.fileStreamReader = fileStreamReader;
+        this.parser = parser;
     }
 
     @Override
@@ -29,18 +31,7 @@ public class FileServiceDao implements IServiceDao{
     @Override
     public List<Service> getServices() {
         String fileData = fileStreamReader.readFile();
-        List<Service> services = new ArrayList<>();
-        if(!fileData.isEmpty()) {
-            String[] ary = fileData.split("\n");
-
-            for (int i = 0; i < ary.length; i++) { // check
-                String[] words = ary[i].split("\t");
-                for(int j = 0; j< words.length; j++)
-                    words[j] = words[j].trim();
-                services.add(new Service(words[0], Double.parseDouble(words[1])));
-            }
-        }
-        return services;
+        return  parser.convertToService(fileData);
     }
 
 }
