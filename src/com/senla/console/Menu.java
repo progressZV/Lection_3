@@ -1,6 +1,9 @@
-package com.senla.hotel.console;
+package com.senla.console;
+
+import com.senla.console.items.MenuItem;
 
 public class Menu {
+
     private String name;
     private MenuItem[] menuItems;
 
