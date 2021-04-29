@@ -8,7 +8,6 @@ import java.util.*;
 public class RoomService {
 
     private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"), new Parser());
-    ;
     //  private final List<Room> rooms = new ArrayList<>();
 
 
@@ -22,9 +21,9 @@ public class RoomService {
         System.out.println("Room " + room.getNumber() + " was added successfully.");
     }
 
-    public void changeFreeStatus(Room room, boolean status) {
+    public void changeFreeStatus(Integer id, boolean status) {
         List<Room> rooms = roomDao.getRooms();
-        var room1 = rooms.stream().filter(r -> r.getNumber() == room.getNumber()).findFirst().orElse(null);
+        var room1 = rooms.stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
         if (room1 == null) {
             System.out.println("Can't find the room.");
             return;
@@ -33,13 +32,14 @@ public class RoomService {
             System.out.println("We have already this status.");
             return;
         }
+
         room1.setFreeStatus(status);
         StringBuilder sb = new StringBuilder();
         for (Room room2 : rooms) {
             sb.append(room2.convertToString());
         }
         roomDao.deleteRoom(sb.toString());
-        System.out.println("Status changed for Room №" + room.getNumber());
+        System.out.println("Status changed for Room №" + id);
     }
 
     public void deleteRoom(int number) {
@@ -71,9 +71,9 @@ public class RoomService {
         return rooms;
     }
 
-    public void changeCostRoom(Room room, double cost) {
+    public void changeCostRoom(Integer id, double cost) {
         List<Room> rooms = roomDao.getRooms();
-        var room1 = rooms.stream().filter(r -> r.getNumber() == room.getNumber()).findFirst().orElse(null);
+        var room1 = rooms.stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
         if (room1 == null) {
             System.out.println("Can't find the room.");
             return;
@@ -88,12 +88,12 @@ public class RoomService {
             sb.append(room2.convertToString());
         }
         roomDao.deleteRoom(sb.toString());
-        System.out.println("Cost changed for Room №" + room.getNumber());
+        System.out.println("Cost changed for Room №" + id);
     }
 
-    public void changeFixStatus(Room room, boolean fixStatus) {
+    public void changeFixStatus(Integer id, boolean fixStatus) {
         List<Room> rooms = roomDao.getRooms();
-        var room1 = rooms.stream().filter(r -> r.getNumber() == room.getNumber()).findFirst().orElse(null);
+        var room1 = rooms.stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
         if (room1 == null) {
             System.out.println("Can't find the room.");
             return;
@@ -102,13 +102,18 @@ public class RoomService {
             System.out.println("We have already this status.");
             return;
         }
+        if(!room1.getFreeStatus()) {
+            System.out.println("We have a client in.");
+            return;
+        }
+
         room1.setFixStatus(fixStatus);
         StringBuilder sb = new StringBuilder();
         for (Room room2 : rooms) {
             sb.append(room2.convertToString());
         }
         roomDao.deleteRoom(sb.toString());
-        System.out.println("Status changed for Room №" + room.getNumber());
+        System.out.println("Status changed for Room №" + id);
     }
 }
  /*   public String putInTheRoom(List<Room> hotel){

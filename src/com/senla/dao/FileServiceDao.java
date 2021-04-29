@@ -20,7 +20,7 @@ public class FileServiceDao implements IServiceDao{
 
     @Override
     public void saveService(Service service) {
-        fileStreamWriter.write(service.toString(), true);
+        fileStreamWriter.write(service.convertToString(), true);
     }
 
     @Override

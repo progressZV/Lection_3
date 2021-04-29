@@ -22,7 +22,6 @@ public class FileStreamWriter {
         boolean flag = checkFile(path);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, append))) {
             if (flag) {
-        //      bw.write("id" + "\t" + "number"+ "\t" + "price" + "\t" + "clientName");
                 bw.write(str);
             }
         }

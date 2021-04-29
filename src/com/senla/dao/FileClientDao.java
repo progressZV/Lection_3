@@ -21,7 +21,7 @@ public class FileClientDao implements IClientDao{
 
     @Override
     public void saveClient(Client client) {
-        fileStreamWriter.write(client.toString(), true);
+        fileStreamWriter.write(client.convertToString(), true);
     }
 
     @Override

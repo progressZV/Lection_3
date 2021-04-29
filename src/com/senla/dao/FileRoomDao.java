@@ -19,7 +19,7 @@ public class FileRoomDao implements IRoomDao{
 
     @Override
     public void saveRoom(Room room) {
-        fileStreamWriter.write(room.toString(), true);
+        fileStreamWriter.write(room.convertToString(), true);
     }
 
     @Override

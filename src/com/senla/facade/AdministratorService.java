@@ -24,18 +24,18 @@ public class AdministratorService {
 
     public void removeService(String name) { service.deleteService(name);}
 
-    public void addClient(Room room, Client client) {
+    public void addClient(Integer roomID, Client client) {
         boolean freeRoomStatus;
-        freeRoomStatus = clientService.addClient(room, client);
+        freeRoomStatus = clientService.addClient(roomID, client);
         if(freeRoomStatus)
-        roomService.changeFreeStatus(room, false);
+        roomService.changeFreeStatus(roomID, false);
     }
 
-    public void removeClient(String name, Room room) {
+    public void removeClient(String name, Integer roomID) {
         boolean freeRoomStatus;
-        freeRoomStatus = clientService.removeClient(name, room);
-        if(!freeRoomStatus)
-            roomService.changeFreeStatus(room, true);
+        freeRoomStatus = clientService.removeClient(name, roomID);
+        if(freeRoomStatus)
+            roomService.changeFreeStatus(roomID, true);
     }
 
     public void checkAllRooms() { roomService.getAllRooms(); }
@@ -44,12 +44,12 @@ public class AdministratorService {
 
     public void checkAllClients() { clientService.getClients(); }
 
-    public void changeCostRoom(Room room, double cost) { roomService.changeCostRoom(room, cost); }
+    public void changeCostRoom(Integer id, double cost) { roomService.changeCostRoom(id, cost); }
 
-    public void changeFixStatus(Room room, boolean fixStatus) { roomService.changeFixStatus(room, fixStatus); }
+    public void changeFixStatus(Integer id, boolean fixStatus) { roomService.changeFixStatus(id, fixStatus); }
 
-    public void changeFreeStatus(Room room, boolean status) { roomService.changeFreeStatus(room,status); }
+    public void changeFreeStatus(Integer id, boolean status) { roomService.changeFreeStatus(id, status); }
 
-    public void changeCostService(Service service1, double cost) { service.changeCostService(service1, cost); }
+    public void changeCostService(String name, double cost) { service.changeCostService(name, cost); }
 
 }

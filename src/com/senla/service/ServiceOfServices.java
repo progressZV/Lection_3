@@ -10,12 +10,11 @@ import java.util.List;
 public class ServiceOfServices {
 
     private IServiceDao serviceDao = new FileServiceDao(new FileStreamWriter("Services.txt"), new FileStreamReader("Services.txt"), new Parser());
-    ;
     //   private final List<Service> services = new ArrayList();
 
 
     public void addService(Service service) {
-        var service1 = serviceDao.getServices().stream().filter(s -> s.getName() == service.getName()).findFirst();
+        var service1 = serviceDao.getServices().stream().filter(s -> s.getName().equals(service.getName())).findFirst();
         if (service1.isPresent()) {
             System.out.println("Service with this name already exists.");
             return;
@@ -40,9 +39,9 @@ public class ServiceOfServices {
         System.out.println("Service " + service.getName() + " was removed successfully.");
     }
 
-    public void changeCostService(Service service, double cost) {
+    public void changeCostService(String name, double cost) {
         List<Service> services = serviceDao.getServices();
-        Service service1 = services.stream().filter(s -> s.getName().equals(service.getName())).findFirst().orElse(null);
+        Service service1 = services.stream().filter(s -> s.getName().equals(name)).findFirst().orElse(null);
         if (service1 == null) {
             System.out.println("Can't find the service.");
             return;
@@ -57,7 +56,7 @@ public class ServiceOfServices {
             sb.append(service2.convertToString());
         }
         serviceDao.deleteService(sb.toString());
-        System.out.println("Cost changed for Room №" + service.getName());
+        System.out.println("Cost changed for Room №" + name);
     }
 
     public List<Service> getAllServices() {
