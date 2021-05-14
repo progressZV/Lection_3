@@ -1,7 +1,8 @@
 package com.senla.console;
 
-import java.io.IOException;
 import com.senla.console.items.MenuItem;
+
+import java.io.IOException;
 
 public class Navigator {
 

@@ -1,12 +1,11 @@
 package com.senla.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.annotation.Id;
 
 public class Room {
+    private int number = 0;
     private boolean freeStatus = false;
     private boolean fixStatus = false;
-    private int number = 0;
     private double cost = 0;
     private int stars_count;
     private int rooms_count;
@@ -19,6 +18,8 @@ public class Room {
         this.stars_count = stars_count;
         this.rooms_count = rooms_count;
     }
+
+    public Room(){}
 
     public double getCost() { return cost; }
 

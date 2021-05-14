@@ -8,6 +8,7 @@ public class Service {
         this.name = name;
         this.cost = cost;
     }
+    public Service(){ }
 
     public String getName() {
         return name;

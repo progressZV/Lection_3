@@ -2,7 +2,6 @@ package com.senla.dao;
 
 import com.senla.entity.Room;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileRoomDao implements IRoomDao{
@@ -34,12 +33,17 @@ public class FileRoomDao implements IRoomDao{
     }
 
     @Override
-    public void changeCostRoom(Room room) {
+    public void changeCostRoom(Integer id, double cost) {
 
     }
 
     @Override
-    public void changeFixStatus(Room room) {
+    public void changeFixStatus(Integer id, boolean fix_status) {
+
+    }
+
+    @Override
+    public void changeFreeStatus(Integer number, boolean free_status) {
 
     }
 }

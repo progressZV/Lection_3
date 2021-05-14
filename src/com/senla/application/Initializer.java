@@ -3,11 +3,6 @@ package com.senla.application;
 
 import com.senla.entity.*;
 import com.senla.facade.AdministratorService;
-import com.senla.service.RoomService;
-import com.senla.service.ServiceOfServices;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Initializer {
     public void initialize(){

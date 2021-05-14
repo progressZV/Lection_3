@@ -9,6 +9,7 @@ public class Client {
         this.name = name;
         this.appsNumber = appsNumber;
     }
+    public Client(){ }
 
     public String getName() {
         return name;
@@ -21,6 +22,8 @@ public class Client {
     public int getAppsNumber() {
         return appsNumber;
     }
+
+    public void setAppsNumber(Integer appsNumber){ this.appsNumber = appsNumber;}
 
     public String convertToString(){
         return getName() + "\t" + getAppsNumber() + "\n";

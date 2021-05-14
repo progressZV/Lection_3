@@ -1,9 +1,7 @@
 package com.senla.dao;
 
-import com.senla.entity.Room;
 import com.senla.entity.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileServiceDao implements IServiceDao{
@@ -34,4 +32,8 @@ public class FileServiceDao implements IServiceDao{
         return  parser.convertToService(fileData);
     }
 
+    @Override
+    public void changePrice(String name, double price) {
+
+    }
 }

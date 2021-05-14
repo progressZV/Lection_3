@@ -3,48 +3,37 @@ package com.senla.service;
 import com.senla.dao.*;
 import com.senla.entity.*;
 
-import java.util.*;
+import java.util.List;
 
 public class RoomService {
 
-    private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"), new Parser());
-    //  private final List<Room> rooms = new ArrayList<>();
+    // private IRoomDao roomDao = new FileRoomDao(new FileStreamWriter("Rooms.txt"), new FileStreamReader("Rooms.txt"), new Parser());
+    private IRoomDao iroomDao = new JDBCRoomDao();
 
 
     public void addRoom(Room room) {
-        var room1 = roomDao.getRooms().stream().filter(r -> r.getNumber() == room.getNumber()).findFirst();
+        var room1 = iroomDao.getRooms().stream().filter(r -> r.getNumber() == room.getNumber()).findFirst();
         if (room1.isPresent()) {
             System.out.println("Room with this number already exists.");
             return;
         }
-        roomDao.saveRoom(room);
+        iroomDao.saveRoom(room);
         System.out.println("Room " + room.getNumber() + " was added successfully.");
     }
 
     public void changeFreeStatus(Integer id, boolean status) {
-        List<Room> rooms = roomDao.getRooms();
-        var room1 = rooms.stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
+        var room1 = iroomDao.getRooms().stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
         if (room1 == null) {
             System.out.println("Can't find the room.");
             return;
         }
-        if (room1.getFreeStatus() == status) {
-            System.out.println("We have already this status.");
-            return;
-        }
 
-        room1.setFreeStatus(status);
-        StringBuilder sb = new StringBuilder();
-        for (Room room2 : rooms) {
-            sb.append(room2.convertToString());
-        }
-        roomDao.deleteRoom(sb.toString());
+        iroomDao.changeFreeStatus(id, status);
         System.out.println("Status changed for Room №" + id);
     }
 
     public void deleteRoom(int number) {
-        List<Room> rooms = roomDao.getRooms();
-        Room room = rooms.stream().filter(r -> r.getNumber() == number).findFirst().orElse(null);
+        Room room =  iroomDao.getRooms().stream().filter(r -> r.getNumber() == number).findFirst().orElse(null);
         if (room == null) {
             System.out.println("Can't find the room.");
             return;
@@ -53,18 +42,14 @@ public class RoomService {
             System.out.println("This room has a client in.");
             return;
         }
-        rooms.remove(room);
-        StringBuilder sb = new StringBuilder();
-        for (Room room1 : rooms) {
-            sb.append(room1.convertToString());
-        }
-        roomDao.deleteRoom(sb.toString());
+
+        iroomDao.deleteRoom(String.valueOf(number));
 
         System.out.println("Room " + room.getNumber() + " was removed successfully.");
     }
 
     public List<Room> getAllRooms() {
-        List<Room> rooms = roomDao.getRooms();
+        List<Room> rooms = iroomDao.getRooms();
         for (Room room : rooms) {
             System.out.println(room.convertToString());
         }
@@ -72,8 +57,7 @@ public class RoomService {
     }
 
     public void changeCostRoom(Integer id, double cost) {
-        List<Room> rooms = roomDao.getRooms();
-        var room1 = rooms.stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
+        var room1 =  iroomDao.getRooms().stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
         if (room1 == null) {
             System.out.println("Can't find the room.");
             return;
@@ -82,18 +66,12 @@ public class RoomService {
             System.out.println("We have already this cost.");
             return;
         }
-        room1.setCost(cost);
-        StringBuilder sb = new StringBuilder();
-        for (Room room2 : rooms) {
-            sb.append(room2.convertToString());
-        }
-        roomDao.deleteRoom(sb.toString());
+        iroomDao.changeCostRoom(id, cost);
         System.out.println("Cost changed for Room №" + id);
     }
 
     public void changeFixStatus(Integer id, boolean fixStatus) {
-        List<Room> rooms = roomDao.getRooms();
-        var room1 = rooms.stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
+        var room1 =  iroomDao.getRooms().stream().filter(r -> r.getNumber() == id).findFirst().orElse(null);
         if (room1 == null) {
             System.out.println("Can't find the room.");
             return;
@@ -107,132 +85,8 @@ public class RoomService {
             return;
         }
 
-        room1.setFixStatus(fixStatus);
-        StringBuilder sb = new StringBuilder();
-        for (Room room2 : rooms) {
-            sb.append(room2.convertToString());
-        }
-        roomDao.deleteRoom(sb.toString());
+
+       iroomDao.changeFixStatus(id, fixStatus);
         System.out.println("Status changed for Room №" + id);
     }
 }
- /*   public String putInTheRoom(List<Room> hotel){
-        System.out.println("В какой номер поселить?");
-        Scanner in = new Scanner(System.in);
-        int answer = in.nextInt();
-        for(Room room : hotel){
-            if(room.getNumber() == answer && room.getFreeStatus() == true && room.getFixStatus() == false){
-                room.setFreeStatus(false);
-                return "Поселение прошло успешно.";
-            }
-            else if (room.getNumber() == answer && room.getFreeStatus() == false){
-                return "Данный номер занят.";
-            }
-        }
-        return "Данного номера не существует.";
-    }
-    public String removeFromRoom(List<Room> hotel){
-        System.out.println("Из какого номера выселить?");
-        Scanner in = new Scanner(System.in);
-        int answer = in.nextInt();
-        for(Room room : hotel){
-            if(room.getNumber() == answer && room.getFreeStatus() == false){
-                room.setFreeStatus(true);
-                return "Выселение прошло успешно.";
-            }
-            else if (room.getNumber() == answer && room.getFreeStatus() == true){
-                return "Данный номер никем не занят.";
-            }
-        }
-        return "Данного номера не существует.";
-    }
-    public String changeFixStatus(List<Room> hotel){
-        System.out.println("Статус какого номера изменить?");
-        Scanner in = new Scanner(System.in);
-        int answer = in.nextInt();
-        for(Room room : hotel){
-            if(room.getNumber() == answer && room.getFreeStatus() == false){
-                return "Данный номер занят.";
-            }
-            else if (room.getNumber() == answer && room.getFreeStatus() == true){
-                System.out.println("На какой статус изменить?\n 1 - Ремонтируемый. \t 2 - Обслуживаемый.");
-                answer = in.nextInt();
-                switch (answer){
-                    case 1:
-                        if(room.getFixStatus() == false)
-                            room.setFixStatus(true);
-                        else return "Данная комната уже ремонтируется.";
-                        return "Статус номера изменён на ремонтируемый.";
-                    case 2:
-                        if(room.getFixStatus() == true)
-                            room.setFixStatus(false);
-                        else return "Данная комната уже обслуживается.";
-                        return "Статус номера изменён на обслуживаемый.";
-                    default: return "Некорректный ввод.";
-                }
-            }
-        }
-        return "Данного номера не существует.";
-    }
-    public String changeCost(List<Room> hotel, List<Service> services){
-        System.out.println("1 - Изменить цену номера.\n 2 - Изменить цену услуги.");
-        Scanner in = new Scanner(System.in);
-        int answer = in.nextInt();
-        if(answer == 1) {
-            System.out.println("Цену какого номера изменить?");
-            answer = in.nextInt();
-            for (Room room : hotel) {
-                if (room.getNumber() == answer && room.getFreeStatus() == false) {
-                    return "Данный номер занят.";
-                } else if (room.getNumber() == answer && room.getFreeStatus() == true) {
-                    System.out.println("Назовите цену:");
-                    double cost = in.nextDouble();
-                    if(cost == room.getCost())
-                        return "Данная цена не отличается от имеющейся.";
-                    room.setCost(cost);
-                    return "Цена номера изменена на " + cost;
-                }
-            }
-            return "Данного номера не существует.";
-        }
-        else
-        {
-            System.out.println("Цену какой услуги изменить?");
-            String name = in.nextLine();
-            for(Service service : services){
-                if (service.getName() == name){
-                    System.out.println("Назовите цену:");
-                    answer = in.nextInt();
-                    if(answer == service.getCost())
-                        return "Данная цена не отличается от имеющейся.";
-                    service.setCost(answer);
-                    return "Цена услуги изменена на " + answer;
-                }
-            }
-            return "Данной услуги у нас нет.";
-        }
-    }
-    public String listNumbers(List<Room> hotel){
-        StringBuilder stringBuilder = new StringBuilder();
-        Comparator<Room> roomComparator = new RoomCostComparator().thenComparing(new RoomRoomsComparator()).thenComparing(new RoomStarsComparator());
-        Collections.sort(hotel, roomComparator);
-
-        System.out.println("1 - Список всех номеров.\n 2 - Список свободных номеров.");
-        Scanner in = new Scanner(System.in);
-        int answer = in.nextInt();
-        if (answer == 1) {
-            for (Room room : hotel) {
-                stringBuilder.append(room.toString());
-            }
-            return stringBuilder.toString();
-        }
-        else {
-            for (Room room : hotel) {
-                if (room.getFreeStatus() == true){
-                    stringBuilder.append(room.toString());
-                }
-            }
-        }
-        return  stringBuilder.toString();
-    }
-} */

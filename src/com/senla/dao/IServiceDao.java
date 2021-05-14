@@ -8,4 +8,5 @@ public interface IServiceDao {
     void saveService(Service service);
     void deleteService(String name);
     List<Service> getServices();
+    void changePrice(String name, double price);
 }

@@ -1,12 +1,11 @@
 package com.senla.dao;
 
 import com.senla.entity.Client;
-import com.senla.entity.Room;
 
 import java.util.List;
 
 public interface IClientDao {
     void saveClient(Client client);
-    void removeClient(String name);
+    void removeClient(String name, Integer id);
     List<Client> getClients();
 }

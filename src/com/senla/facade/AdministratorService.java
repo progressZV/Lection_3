@@ -5,8 +5,6 @@ import com.senla.service.ClientService;
 import com.senla.service.RoomService;
 import com.senla.service.ServiceOfServices;
 
-import java.util.List;
-
 public class AdministratorService {
     private RoomService roomService = new RoomService();
     private ServiceOfServices service = new ServiceOfServices();

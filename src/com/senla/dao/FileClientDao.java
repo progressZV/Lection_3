@@ -1,10 +1,7 @@
 package com.senla.dao;
 
 import com.senla.entity.Client;
-import com.senla.entity.Room;
-import com.senla.entity.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileClientDao implements IClientDao{
@@ -25,7 +22,7 @@ public class FileClientDao implements IClientDao{
     }
 
     @Override
-    public void removeClient(String name) {
+    public void removeClient(String name, Integer id) {
         fileStreamWriter.write(name,false);
     }
 
